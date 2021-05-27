@@ -37,9 +37,8 @@ namespace BugTracker
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            
-            
-            
+
+            services.AddScoped<IBTRolesService, BTRoleService>();
             services.AddMvc();
         }
 
