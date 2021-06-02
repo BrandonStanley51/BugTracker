@@ -31,17 +31,38 @@ namespace BugTracker.Sevices
 
         public async Task<bool> AddUserToProjectAsync(string userId, int projectId)
         {
-            Project project = await _context.Project.FindAsync(projectId);
-            BTUser user = await _context.Users.FindAsync(userId);
-            try
+            try 
             {
-                project.Members.Add(user);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch
+                BTUser user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                if (user != null)
+                {
+                    Project project = await _context.Project.FirstOrDefaultAsync(p => p.Id == projectId);
+                    if (!await IsUserOnProject(userId, projectId))
+                    {
+                        try
+                        {
+                            project.Members.Add(user);
+                            await _context.SaveChangesAsync();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+              }
+            catch (Exception Ex)
             {
-                return false;
+                Debug.WriteLine($"*** Error *** - Error Adding User To Project. --> {Ex.Message}");
             }
         }
 
@@ -76,22 +97,25 @@ namespace BugTracker.Sevices
             return teamMembers;
         }
 
-        public Task<BTUser> GetProjectManagerAsync(int projectId)
+        public async Task<BTUser> GetProjectManagerAsync(int projectId)
         {
             Project project = await _context.Project
-                                .include(project => project.Members)
+                                .Include(project => project.Members)
                                 .FirstOrDefaultAsync(u => u.Id == projectId);
             List<BTUser> members = new();
         }
 
-        public Task<List<BTUser>> GetProjectMembersByRoleAsync(int projectId, string role)
+        public async Task<List<BTUser>> GetProjectMembersByRoleAsync(int projectId, string role)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsUserOnProject(string userId, int projectId)
+        public async Task<bool> IsUserOnProject(string userId, int projectId)
         {
-            throw new NotImplementedException();
+            Project project = await _context.Project.FirstOrDefaultAsync(u => u.Id == projectId);
+
+            bool result = project.Members.Any(u => u.Id == userId);
+            return result;
         }
 
         public async Task<List<Project>> ListUserProjectsAsync(string userId)
@@ -137,13 +161,54 @@ namespace BugTracker.Sevices
 
         public async Task RemoveUserFromProjectAsync(string userId, int projectId)
         {
-            bool result = (await _userManager.RemoveFromProjectAsync(userId, projectId)).Succeeded;
-            return result;
+            try
+            {
+                BTUser user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                Project project = await _context.Project.FirstOrDefaultAsync(p => p.Id == projectId);
+
+                if (await IsUserOnProject(userId, projectId))
+                {
+                    try
+                    {
+                        project.Members.Remove(user);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"*** Error *** - Error Adding user to project. --> {ex.Message}");
+            }
         }
 
-        public Task RemoveUsersFromProjectByRoleAsync(string userId, int projectId)
+        public async Task RemoveUsersFromProjectByRoleAsync(string role, int projectId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<BTUser> members = await GetProjectMembersByRoleAsync(projectId, role);
+                Project project = await _context.Project.FirstOrDefaultAsync(p => p.Id == projectId);
+                foreach (BTUser btUser in members)
+                {
+                    try
+                    {
+                        project.Members.Remove(btUser);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch(Exception)
+                    {
+                        throw;
+                    }
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"*** ERROR *** - Error Removing users from project.  --> {ex.Message}");
+            }
         }
 
         public Task<List<BTUser>> SubmittersOnProjectAsync(int projectId)

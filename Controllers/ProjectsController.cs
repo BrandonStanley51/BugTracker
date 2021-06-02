@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Models.ViewModels;
+using BugTracker.Sevices;
+using BugTracker.Sevices.Interfaces;
 
 namespace BugTracker.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IBTProjectService _projectService;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(ApplicationDbContext context, BTProjectService projectService)
         {
             _context = context;
+            _projectService = projectService;
         }
 
         // GET: Projects
@@ -93,6 +98,23 @@ namespace BugTracker.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
+        [HttpGet]
+        public async Task<IActionResult> AssignUsers(int id)
+        {
+            ProjectMembersViewModel model = new();
+            Project project = (await _projectService.GetAllProjectsByCompany())
+                                .Include(p => p.Members)
+                                .FirstOrDefaultAsync(p => p.Id == id);
+           
+            model.Project = project;
+            List<BTUser> users = await _context.Users.ToListAsync();
+            List<BTUser> members = (List<BTUser>)await _projectService.UsersOnProjectAsync(id);
+            model.Users = new MultiSelectList(users, "Id", "FullName", members);
+            return View(model);
+        }
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageFileName,ImageFileData,ImageContentType,Archived")] Project project)
