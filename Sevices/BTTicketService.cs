@@ -149,30 +149,12 @@ namespace BugTracker.Sevices
                                            .Where(t => t.TicketStatusId == statusId).ToListAsync();
         }
 
-        public Task<List<Ticket>> GetAllTicketsByTypeAsync(int companyId, string typeName)
+        public async Task<List<Ticket>> GetAllTicketsByTypeAsync(int companyId, string typeName)
         {
-            try
-            {
-                List<Ticket> tickets = await _context.Project.Include(p => p.Company)
-                                                             .Where(p => p.CompanyId == companyId)
-                                                             .SelectMany(p => p.Tickets)
-                                                                .Include(t => t.Attachments)
-                                                                .Include(t => t.Comments)
-                                                                .Include(t => t.History)
-                                                                .Include(t => t.DeveloperUser)
-                                                                .Include(t => t.OwnerUser)
-                                                                .Include(t => t.TickeyPriority)
-                                                                .Include(t => t.TicketStatus)
-                                                                .Include(t => t.TicketType)
-                                                                .Include(t => t.Project)
-                                                                .Where(t => t.Archived == true)
-                                                                .ToListAsync();
-                return tickets;
-            }
-            catch
-            {
-                throw;
-            }
+            int company = (await LookupTicketStatusIdAsync(typeName)).Value;
+            return await _context.Project.Where(p => p.CompanyId == companyId)
+                                           .SelectMany(p => p.Tickets)
+                                           .Where(t => t.TicketStatusId == companyId).ToListAsync();
         }
 
         public async Task<List<Ticket>> GetArchivedTicketsByCompanyAsync(int companyId)

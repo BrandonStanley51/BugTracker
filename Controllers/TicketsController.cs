@@ -26,6 +26,19 @@ namespace BugTracker.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> AllTickets()
+        {
+            var applicationDbContext = await _context.Ticket
+                                            .Include(t => t.DeveloperUser)
+                                            .Include(t => t.OwnerUser)
+                                            .Include(t => t.Project)
+                                            .Include(t => t.Comments)
+                                            .Include(t => t.TickeyPriority)
+                                            .Include(t => t.TicketStatus)
+                                            .Include(t => t.TicketType).ToListAsync();
+            return View(applicationDbContext);
+        }
+
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -42,6 +42,12 @@ namespace BugTracker
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IBTRolesService, BTRolesService>();
+            services.AddScoped<IBTProjectService, BTProjectService>();
+            services.AddScoped<IBTTicketService, BTTicketService>();
+            services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
+
+
+
             services.AddMvc();
         }
 
