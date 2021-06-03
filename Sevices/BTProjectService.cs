@@ -43,6 +43,7 @@ namespace BugTracker.Sevices
                     return false;
                 }
             }
+            return false;
         }
 
         public async Task<bool> AddUserToProjectAsync(string userId, int projectId)
@@ -80,7 +81,7 @@ namespace BugTracker.Sevices
             {
                 Debug.WriteLine($"*** Error *** - Error Adding User To Project. --> {Ex.Message}");
             }
-            
+            return false;
         }
 
         public async Task<List<BTUser>> DevelopersOnProjectAsync(int projectId)
@@ -100,15 +101,19 @@ namespace BugTracker.Sevices
             return developers;
         }
 
-        public Task<List<Project>> GetAllProjectsByCompany(int companyId)
+        public async Task<List<Project>> GetAllProjectsByCompany(int companyId)
         {
-            throw new NotImplementedException();
-        }///
+            List<Project> projects = new();
+            projects = await GetAllProjectsByCompany(companyId);
+            return projects.ToList();
+        }
 
-        public Task<List<Project>> GetAllProjectsByPriority(int companyId, string priorityName)
+        public async Task<List<Project>> GetAllProjectsByPriority(int companyId, string priorityName)
         {
-            throw new NotImplementedException();
-        }///
+            List<Project> projects = new();
+            projects = await GetAllProjectsByCompany(companyId);
+            return projects;
+        }
 
         public async Task<List<Project>> GetArchivedProjectsByCompany(int companyId)
         {
@@ -283,7 +288,7 @@ namespace BugTracker.Sevices
             return users;
         }
 
-        public async Task<int> LookupProjectPriorityId(string priorityName)
+        public async Task<int> LookUpProjectPriorityId(string priorityName)
         {
             return (await _context.ProjectPriority.FirstOrDefaultAsync(p => p.Name == priorityName)).Id;
         }
