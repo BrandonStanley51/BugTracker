@@ -115,8 +115,13 @@ namespace BugTracker.Sevices
         public async Task<List<Project>> GetAllProjectsByCompany(int companyId)
         {
             List<Project> projects = new();
-            projects = await GetAllProjectsByCompany(companyId);
-            return projects.ToList();
+            projects = await _context.Project.Include(p => p.Company)
+                                             .Include(p => p.Members)
+                                             .Include(p => p.ProjectPriority)
+                                             .Where(p => p.CompanyId == companyId)
+                                             .ToListAsync();
+
+            return projects;
         }
 
         public async Task<List<Project>> GetAllProjectsByPriority(int companyId, string priorityName)
@@ -202,7 +207,7 @@ namespace BugTracker.Sevices
                                                         .ThenInclude(t => t.OwnerUser)
                                                 .Include(u => u.Projects)
                                                     .ThenInclude(t => t.Tickets)
-                                                        .ThenInclude(t => t.TicketPriorityId)
+                                                        .ThenInclude(t => t.TicketPriority)
                                                 .Include(u => u.Projects)
                                                     .ThenInclude(t => t.Tickets)
                                                         .ThenInclude(t => t.TicketStatus)
@@ -305,8 +310,15 @@ namespace BugTracker.Sevices
 
         public async Task<List<BTUser>> UsersNotOnProjectAsync(int projectId, int companyId)
         {
-            List<BTUser> users = await _context.Users.Where(u => u.Projects.All(p => p.Id != projectId) && u.CompanyId == companyId).ToListAsync();
-            return users;
+           // List<BTUser> usersNotOnProject = new();
+          //  usersNotOnProject = await _context.Users.Where(u => u.Projects.All(p => p.Id != projectId) && u.CompanyId == companyId).ToList();
+
+
+              //  return usersNotOnProject.ToList();
+            
+
+           List<BTUser> users = await _context.Users.Where(u => u.Projects.All(p => p.Id != projectId) && u.CompanyId == companyId).ToListAsync();
+           return users;
         }
 
         public async Task<int> LookUpProjectPriorityId(string priorityName)

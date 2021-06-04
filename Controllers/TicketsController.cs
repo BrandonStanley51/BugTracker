@@ -31,7 +31,7 @@ namespace BugTracker.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ticket.Include(t => t.DeveloperUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType).Include(t => t.TickeyPriority);
+            var applicationDbContext = _context.Ticket.Include(t => t.DeveloperUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType).Include(t => t.TicketPriority);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -48,7 +48,7 @@ namespace BugTracker.Controllers
                                             .Include(t => t.OwnerUser)
                                             .Include(t => t.Project)
                                             .Include(t => t.Comments)
-                                            .Include(t => t.TickeyPriority)
+                                            .Include(t => t.TicketPriority)
                                             .Include(t => t.TicketStatus)
                                             .Include(t => t.TicketType).ToListAsync();
             return View(applicationDbContext);
@@ -68,7 +68,7 @@ namespace BugTracker.Controllers
                 .Include(t => t.Project)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.TicketType)
-                .Include(t => t.TickeyPriority)
+                .Include(t => t.TicketPriority)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -124,11 +124,11 @@ namespace BugTracker.Controllers
                 string userId = _userManager.GetUserId(User);
                 ticket.OwnerUserId = userId;
 
-                ticket.TicketStatusId = (await _ticketService.LookupTicketStatusIdAsync("New").Value);
+                ticket.TicketStatusId = (await _ticketService.LookupTicketStatusIdAsync("New")).Value;
 
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","Projects",new { id=ticket.ProjectId});
             }
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
             ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
@@ -216,7 +216,7 @@ namespace BugTracker.Controllers
                 .Include(t => t.Project)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.TicketType)
-                .Include(t => t.TickeyPriority)
+                .Include(t => t.TicketPriority)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
