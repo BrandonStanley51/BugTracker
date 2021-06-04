@@ -20,11 +20,13 @@ namespace BugTracker.Sevices
         private readonly IBTRolesService _roleService;
         private readonly ILogger<HomeController> _logger;
 
-        public BTProjectService(UserManager<BTUser> userManager, ApplicationDbContext context, IBTRolesService roleService)
+
+        public BTProjectService(UserManager<BTUser> userManager, ApplicationDbContext context, IBTRolesService roleService, ILogger<HomeController> logger)
         {
             _userManager = userManager;
             _context = context;
             _roleService = roleService;
+            _logger = logger;
         }
 
         public async Task<bool> AddProjectManagerAsync(string userId, int projectId)
@@ -37,18 +39,27 @@ namespace BugTracker.Sevices
                 {
                     await RemoveProjectManagerAsync(projectId);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.LogInformation($"Error removing current PM. - Error: {ex.Message}");
                     return false;
                 }
             }
-            return false;
+            try
+            {
+                await AddUserToProjectAsync(userId, projectId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Error adding new PM. - Error: {ex.Message}");
+                return false;
+            }
         }
 
         public async Task<bool> AddUserToProjectAsync(string userId, int projectId)
         {
-            try 
+            try
             {
                 BTUser user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
                 if (user != null)
@@ -201,17 +212,27 @@ namespace BugTracker.Sevices
                                                 .FirstOrDefaultAsync(u => u.Id == userId)).Projects.ToList();
                 return userProjects;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"*** ERROR *** - Error Getting user projects list. -->{ex.Message}"); 
-                    throw;
+                Debug.WriteLine($"*** ERROR *** - Error Getting user projects list. -->{ex.Message}");
+                throw;
             }
         }
 
-        public Task RemoveProjectManagerAsync(int projectId)
+        public async Task RemoveProjectManagerAsync(int projectId)
         {
-            throw new NotImplementedException();
-        }///
+            Project project = await _context.Project.Include(u=>u.Members).FirstOrDefaultAsync(p => p.Id == projectId);
+
+            foreach(BTUser user in project.Members)
+            {
+                if(await _roleService.IsUserInRoleAsync(user, "ProjectManager"))
+                {
+                    await RemoveUserFromProjectAsync(user.Id, projectId); 
+                }
+            }
+
+            
+        }
 
         public async Task RemoveUserFromProjectAsync(string userId, int projectId)
         {
@@ -252,14 +273,14 @@ namespace BugTracker.Sevices
                         project.Members.Remove(btUser);
                         await _context.SaveChangesAsync();
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         throw;
                     }
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"*** ERROR *** - Error Removing users from project.  --> {ex.Message}");
             }
@@ -279,7 +300,7 @@ namespace BugTracker.Sevices
                     submitters.Add(user);
                 }
             }
-            return submitters;     
+            return submitters;
         }
 
         public async Task<List<BTUser>> UsersNotOnProjectAsync(int projectId, int companyId)

@@ -21,7 +21,7 @@ namespace BugTracker.Controllers
         private readonly IBTProjectService _projectService;
         private readonly IBTCompanyInfoService _infoService;
 
-        public ProjectsController(ApplicationDbContext context, BTProjectService projectService, IBTCompanyInfoService infoService)
+        public ProjectsController(ApplicationDbContext context, IBTProjectService projectService, IBTCompanyInfoService infoService)
         {
             _context = context;
             _projectService = projectService;

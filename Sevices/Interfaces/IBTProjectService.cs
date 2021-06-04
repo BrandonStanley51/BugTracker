@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Sevices.Interfaces
 {
-    interface IBTProjectService
+            public interface IBTProjectService
     {
             public Task<bool> IsUserOnProject(string userId, int projectId);
 

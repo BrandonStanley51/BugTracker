@@ -15,7 +15,7 @@ namespace BugTracker.Sevices
         private readonly ApplicationDbContext _context;
         private readonly IBTProjectService  _projectService;
 
-        public BTTicketService(ApplicationDbContext context, BTProjectService projectService)
+        public BTTicketService(ApplicationDbContext context, IBTProjectService projectService)
         {
             _context = context;
             _projectService = projectService;

@@ -21,7 +21,7 @@
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+            @*</div>
             <div class="form-group">
                 <label asp-for="Created" class="control-label"></label>
                 <input asp-for="Created" class="form-control" />
@@ -41,20 +41,26 @@
                 <label asp-for="ArchivedData" class="control-label"></label>
                 <input asp-for="ArchivedData" class="form-control" />
                 <span asp-validation-for="ArchivedData" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
+                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId">
+                    <option>Select a Project</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="TicketTypeId" class="control-label"></label>
-                <select asp-for="TicketTypeId" class ="form-control" asp-items="ViewBag.TicketTypeId"></select>
+                <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId">
+                    <option>Select a Type</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="TicketPriorityId" class="control-label"></label>
-                <select asp-for="TicketPriorityId" class ="form-control" asp-items="ViewBag.TicketPriorityId"></select>
+                <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId">
+                    <option>Select a Priority</option>
+                </select>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="TicketStatusId" class="control-label"></label>
                 <select asp-for="TicketStatusId" class ="form-control" asp-items="ViewBag.TicketStatusId"></select>
             </div>
@@ -65,7 +71,7 @@
             <div class="form-group">
                 <label asp-for="DeveloperUserId" class="control-label"></label>
                 <select asp-for="DeveloperUserId" class ="form-control" asp-items="ViewBag.DeveloperUserId"></select>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
