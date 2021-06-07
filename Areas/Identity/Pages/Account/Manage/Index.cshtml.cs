@@ -33,6 +33,10 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "Display Name")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            public string DisplayName { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -47,6 +51,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                DisplayName = user.FullName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -86,6 +91,26 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            var hasChanged = false;
+
+            //Store the new displayName if it has changed        
+            if (user.DisplayName != Input.DisplayName)
+            {
+                user.DisplayName = Input.DisplayName;
+                hasChanged = true;
+            }
+
+            //if (Input.NewImage is not null)
+            //{
+            //    user.ImageData = await _fileService.EncodeFileAsync(Input.NewImage);
+            //    hasChanged = true;
+            //}
+
+            if (hasChanged)
+            {
+                await _userManager.UpdateAsync(user);
             }
 
             await _signInManager.RefreshSignInAsync(user);

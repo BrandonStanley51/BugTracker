@@ -26,6 +26,8 @@ namespace BugTracker.Models
         [DisplayName("Full Name")]
         public string FullName { get { return $"{FirstName} {LastName}"; } } 
 
+        public string DisplayName { get; set; }
+
         [NotMapped]
         [DataType(DataType.Upload)]
         //
