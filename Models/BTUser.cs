@@ -14,18 +14,19 @@ namespace BugTracker.Models
     {
         [Required]
         [DisplayName("First Name")]
-        [StringLength(50)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required]
         [DisplayName("Last Name")]
-        [StringLength(50)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [NotMapped]
         [DisplayName("Full Name")]
-        public string FullName { get { return $"{FirstName} {LastName}"; } } 
+        public string FullName { get { return $"{FirstName} {LastName}"; } }
 
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string DisplayName { get; set; }
 
         [NotMapped]

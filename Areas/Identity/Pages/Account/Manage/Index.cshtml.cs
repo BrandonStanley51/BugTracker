@@ -51,7 +51,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                DisplayName = user.FullName,
+                DisplayName = user.DisplayName,
                 PhoneNumber = phoneNumber
             };
         }

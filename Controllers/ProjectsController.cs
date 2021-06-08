@@ -150,7 +150,8 @@ namespace BugTracker.Controllers
             List<BTUser> submitters = await _infoService.GetMembersInRoleAsync(Roles.Submitter.ToString(), companyId);
 
             List<BTUser> users = developers.Concat(submitters).ToList();
-            List<string> members = project.Members.Select(m=>m.Id).ToList();
+            List<string> members = project.Members.Select(m => m.Id).ToList();
+            //List<BTUser> members = project.Members.ToList();
             model.Users = new MultiSelectList(users, "Id", "FullName", members);
             return View(model);
         }
