@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,6 +17,17 @@ namespace BugTracker.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [Authorize]
+        public IActionResult Dashboard()
+        {
+            return View();
+        }        
+
+        public IActionResult Landing()
+        {
+            return View();
         }
 
         public IActionResult Index()

@@ -17,8 +17,8 @@ namespace BugTracker.Controllers
     [Authorize(Roles="Admin")]
     public class UserRolesController : Controller
     {
-        private ApplicationDbContext _context;
-        private UserManager<BTUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<BTUser> _userManager;
         private readonly IBTRolesService _rolesService;
 
         public UserRolesController(ApplicationDbContext context,
