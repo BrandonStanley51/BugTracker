@@ -1,4 +1,7 @@
 ﻿@using BugTracker.Sevices
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<BTUser> btUserManager 
+@{BTUser btUser = await btUserManager.GetUserAsync(User);}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -970,7 +973,7 @@
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <img src="images/profile/pic1.jpg" width="20" alt="" />
                                     <div class="header-info">
-                                        <span>Hey, <strong>btUser.DisplayName!</strong></span>
+                                        <span>Hey, <strong>@btUser.DisplayName!</strong></span>
                                         <small>Business Profile</small>
                                     </div>
                                 </a>
@@ -1140,7 +1143,7 @@
     <!-- Svganimation scripts -->
     <script src="./vendor/svganimation/vivus.min.js"></script>
     <script src="./vendor/svganimation/svg.animation.js"></script>
-
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

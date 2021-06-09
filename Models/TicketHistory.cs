@@ -18,17 +18,17 @@ namespace BugTracker.Models
         public string Property { get; set; }
         
         [DisplayName("Previous")]
-        public int OldValue { get; set; }
+        public string OldValue { get; set; }
         
         [DisplayName("Current")]
-        public int NewValue { get; set; }
+        public string NewValue { get; set; }
 
         [DisplayName("Date Modified")]
         [DataType(DataType.DateTime)]
         public DateTimeOffset Created { get; set; }
 
         [DisplayName("Team Member")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         
         [DisplayName("Description of Change")]
         public string Description { get; set; }

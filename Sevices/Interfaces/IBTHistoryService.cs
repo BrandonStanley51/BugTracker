@@ -8,8 +8,8 @@ namespace BugTracker.Sevices.Interfaces
 {
     public interface IBTHistoryService
     {
-        Task AddHistory(BTTicketService oldTicket, BTTicketService newTicket, string userId);
-        Task<List<TicketHistory>> GetProjectTicketsHistories(int projectId);
-        Task<List<TicketHistory>> GetCompanyTicketHistories(int companyId);
+        Task AddHistoryAsync(Ticket oldTicket, Ticket newTicket, string userId);
+        Task<List<TicketHistory>> GetProjectTicketsHistoriesAsync(int projectId);
+        Task<List<TicketHistory>> GetCompanyTicketHistoriesAsync(int companyId);
     }
 }
