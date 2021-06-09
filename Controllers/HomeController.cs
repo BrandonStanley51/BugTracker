@@ -1,5 +1,9 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Extensions;
+using BugTracker.Models;
+using BugTracker.Models.ViewModels;
+using BugTracker.Sevices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,16 +17,37 @@ namespace BugTracker.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<BTUser> _userManager;
+        private readonly IBTCompanyInfoService _companyInfoService;
+        private readonly IBTProjectService _projectService;
+        private readonly IBTTicketService _ticketService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+                              UserManager<BTUser> userManager,
+                              IBTCompanyInfoService companyInfoService,
+                              IBTProjectService projectService,
+                              IBTTicketService ticketService)
         {
             _logger = logger;
+            _userManager = userManager;
+            _companyInfoService = companyInfoService;
+            _projectService = projectService;
+            _ticketService = ticketService;
         }
 
         [Authorize]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
-            return View();
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            DashboardViewModel model = new()
+            {
+                Company = await _companyInfoService.GetCompanyInfoByIdAsync(companyId),
+                Projects = await _projectService.GetAllProjectsByCompany(companyId),
+                Tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId),
+                Members = await _companyInfoService.GetAllMembersAsync(companyId)
+            };
+            return View(model);
         }        
 
         public IActionResult Landing()

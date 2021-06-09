@@ -10,5 +10,7 @@ namespace BugTracker.Models.ViewModels
         public List<Project> Projects { get; set; }
         public List<Ticket> Tickets { get; set; }
         public List<BTUser> Users { get; set; }
+        public List<BTUser> Members { get; set; }
+        public Company Company { get; set; }
     }
 }

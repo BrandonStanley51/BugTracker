@@ -48,6 +48,7 @@ namespace BugTracker
             services.AddScoped<IBTTicketService, BTTicketService>();
             services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
             services.AddScoped<IEmailSender, GmailEmailService>();
+            services.AddScoped<IBTHistoryService, BTHistoryService>();
 
 
             services.AddMvc();
@@ -79,7 +80,7 @@ namespace BugTracker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Landing}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
