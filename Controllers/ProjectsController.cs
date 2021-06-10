@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> MyProjects()
         {
             var applicationDbContext = _context.Project.Include(p => p.Company).Include(p => p.ProjectPriority);
             return View(await applicationDbContext.ToListAsync());
@@ -75,10 +75,10 @@ namespace BugTracker.Controllers
             {
                 _context.Add(project);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProjects));
             }
             ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", project.CompanyId);
-            ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Id", project.ProjectPriorityId);
+            ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Name", project.ProjectPriorityId);
             return View(project);
         }
 
@@ -131,7 +131,7 @@ namespace BugTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MyProjects));
             }
             ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", project.CompanyId);
             ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Id", project.ProjectPriorityId);
@@ -176,7 +176,7 @@ namespace BugTracker.Controllers
                     {
                         await _projectService.AddUserToProjectAsync(id, model.Project.Id);
                     }
-                    return RedirectToAction("Index", "Projects");
+                    return RedirectToAction("MyProjects", "Projects");
                 }
                 else
                 {
@@ -229,7 +229,7 @@ namespace BugTracker.Controllers
             var project = await _context.Project.FindAsync(id);
             _context.Project.Remove(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyProjects));
         }
 
         private bool ProjectExists(int id)
