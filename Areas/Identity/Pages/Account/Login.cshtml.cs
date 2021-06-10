@@ -83,7 +83,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             if(!string.IsNullOrWhiteSpace(demoEmail))
             {
                 var email = _configuration[demoEmail];
-                var password = _configuration["DefaultUserPassword"];
+                var password = _configuration["DemoUserPassword"];
 
                 var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
                 if(result.Succeeded)
