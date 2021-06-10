@@ -60,7 +60,7 @@ namespace BugTracker.Controllers
         public IActionResult Create()
         {
             ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name");
-            ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Id");
+            ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Name");
             return View();
         }
 
@@ -186,6 +186,19 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+
+        public async Task<IActionResult> AllProjects()
+        {
+            var project = await _context.Project
+                                            .Include(p => p.Members)
+                                            
+                                            .Include(p => p.StartDate)
+                                            .Include(p => p.EndDate)
+                                            .Include(p => p.Archived)
+                                            .Include(p => p.Company)
+                                            .Include(p => p.ProjectPriority).ToListAsync();
+            return View(project);
+        }
 
 
         // GET: Projects/Delete/5
