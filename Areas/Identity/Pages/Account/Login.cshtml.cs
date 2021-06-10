@@ -89,7 +89,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
                 if(result.Succeeded)
                 {
                     _logger.LogInformation("User Logged in.");
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Dashboard", "Home");
                 }
                 else
                 {
