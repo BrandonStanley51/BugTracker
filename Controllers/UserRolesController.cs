@@ -43,7 +43,7 @@ namespace BugTracker.Controllers
             vm.Roles = new MultiSelectList(_context.Roles, "Name", "Name", selected);
             model.Add(vm);
             }
-            return View();
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
