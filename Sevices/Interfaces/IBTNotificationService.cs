@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Sevices.Interfaces
 {
-    interface IBTNotificationService
+    public interface IBTNotificationService
     {
         public Task SaveNotificationAsync(Notification notification);
         public Task AdminsNotificationAsync(Notification notification, int companyId);

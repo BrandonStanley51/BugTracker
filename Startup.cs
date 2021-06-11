@@ -43,13 +43,13 @@ namespace BugTracker
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
+            services.AddScoped<IBTNotificationService, BTNotificationService>();
             services.AddScoped<IBTRolesService, BTRolesService>();
             services.AddScoped<IBTProjectService, BTProjectService>();
             services.AddScoped<IBTTicketService, BTTicketService>();
             services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
             services.AddScoped<IEmailSender, GmailEmailService>();
             services.AddScoped<IBTHistoryService, BTHistoryService>();
-            services.AddScoped<IBTNotificationService, BTNotificationService>();
 
 
             services.AddMvc();
