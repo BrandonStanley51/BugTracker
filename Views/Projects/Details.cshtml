@@ -68,12 +68,12 @@
             @Html.DisplayNameFor(model => model.ProjectPriority)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectPriority.Id)
+            @Html.DisplayFor(model => model.ProjectPriority.Name)
         </dd>
         Members:
         @foreach (BTUser member in Model.Members)
             {
-                <p>@member.FullName</p>
+                @member.FullName
             }
     </dl>
 </div>

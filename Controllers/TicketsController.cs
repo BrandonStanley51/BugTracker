@@ -203,8 +203,8 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.DeveloperUserId);
-            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.OwnerUserId);
+            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
+            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Name", ticket.ProjectId);
             ViewData["TicketStatusId"] = new SelectList(_context.Set<TicketStatus>(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(_context.Set<TicketType>(), "Id", "Name", ticket.TicketTypeId);
@@ -266,8 +266,8 @@ namespace BugTracker.Controllers
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
                 return RedirectToAction(nameof(MyTickets));
             }
-            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.DeveloperUserId);
-            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.OwnerUserId);
+            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
+            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Name", ticket.ProjectId);
             ViewData["TicketStatusId"] = new SelectList(_context.Set<TicketStatus>(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(_context.Set<TicketType>(), "Id", "Name", ticket.TicketTypeId);
@@ -327,7 +327,7 @@ namespace BugTracker.Controllers
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
 
             }
-            return RedirectToAction("Details", "Ticket", new { id = viewModel.Ticket.Id });
+            return RedirectToAction("Details","Ticket",  new { id = viewModel.Ticket.Id });
         }
 
 

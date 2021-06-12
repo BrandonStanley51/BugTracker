@@ -36,7 +36,7 @@ namespace BugTracker.Sevices
             List<Project> projects = new();
 
             projects = await _context.Project.Include(p => p.Members)
-                                              .Include(p => p.ProjectPriorityId)
+                                              .Include(p => p.ProjectPriority)
                                              .Include(p => p.Tickets)
                                               .ThenInclude(t => t.OwnerUser)
                                               .Include(p => p.Tickets)
@@ -48,7 +48,7 @@ namespace BugTracker.Sevices
                                               .Include(p => p.Tickets)
                                               .ThenInclude(t => t.History)
                                               .Include(p => p.Tickets)
-                                              .ThenInclude(t => t.TicketPriorityId)
+                                              .ThenInclude(t => t.TicketPriority)
                                               .Include(p => p.Tickets)
                                               .ThenInclude(t => t.TicketStatus)
                                               .Include(p => p.Tickets)

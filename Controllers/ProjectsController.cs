@@ -145,8 +145,8 @@ namespace BugTracker.Controllers
         {
             ProjectMembersViewModel model = new();
             int companyId = User.Identity.GetCompanyId().Value;
-            Project project = (await _projectService.GetAllProjectsByCompany(companyId))
-                                .FirstOrDefault(p => p.Id == id);
+            var projects = (await _projectService.GetAllProjectsByCompany(companyId));
+            Project project= projects.FirstOrDefault(p => p.Id == id);
            
             model.Project = project;
             List<BTUser> developers = await _infoService.GetMembersInRoleAsync(Roles.Developer.ToString(), companyId);

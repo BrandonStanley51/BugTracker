@@ -1,11 +1,12 @@
 ﻿@model BugTracker.Models.Ticket
 
+
 @{
     ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
-
+@*model IEnumerable<BugTracker.Models.Ticket>*@
 <h4>Ticket</h4>
 <hr />
 <div class="row">
@@ -23,25 +24,25 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ArchivedData" class="control-label"></label>
-                <input asp-for="ArchivedData" class="form-control" />
-                <span asp-validation-for="ArchivedData" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Created" class="control-label"></label>
+                    <input asp-for="Created" class="form-control" />
+                    <span asp-validation-for="Created" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Updated" class="control-label"></label>
+                    <input asp-for="Updated" class="form-control" />
+                    <span asp-validation-for="Updated" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ArchivedData" class="control-label"></label>
+                    <input asp-for="ArchivedData" class="form-control" />
+                    <span asp-validation-for="ArchivedData" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
                 <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId">
@@ -61,23 +62,77 @@
                 </select>
             </div>
             @*<div class="form-group">
-                <label asp-for="TicketStatusId" class="control-label"></label>
-                <select asp-for="TicketStatusId" class ="form-control" asp-items="ViewBag.TicketStatusId"></select>
-            </div>
+                    <label asp-for="TicketStatusId" class="control-label"></label>
+                    <select asp-for="TicketStatusId" class ="form-control" asp-items="ViewBag.TicketStatusId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OwnerUserId" class="control-label"></label>
+                    <select asp-for="OwnerUserId" class ="form-control" asp-items="ViewBag.OwnerUserId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DeveloperUserId" class="control-label"></label>
+                    <select asp-for="DeveloperUserId" class ="form-control" asp-items="ViewBag.DeveloperUserId"></select>
+                </div>*@
             <div class="form-group">
-                <label asp-for="OwnerUserId" class="control-label"></label>
-                <select asp-for="OwnerUserId" class ="form-control" asp-items="ViewBag.OwnerUserId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeveloperUserId" class="control-label"></label>
-                <select asp-for="DeveloperUserId" class ="form-control" asp-items="ViewBag.DeveloperUserId"></select>
-            </div>*@
-            <div class="form-group">
-                <input asp-action="AssignTicket" type="submit" value="Create" class="btn btn-primary" />
+                <input asp-action="Create" type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Recent Company Tickets</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th style="width:80px;"><strong>@Html.DisplayNameFor(model => model.Title)</strong></th>
+                                <th><strong> @Html.DisplayNameFor(model => model.Description)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.Created)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.Updated)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.Project)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketStatus)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketType)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketPriority)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.OwnerUser)</strong></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>01</strong></td>
+                                    <td>Mr. Bobby</td>
+                                    <td>Dr. Jackson</td>
+                                    <td>01 August 2021</td>
+                                    <td><span class="badge light badge-success">Successful</span></td>
+                                    <td>$21.56</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
+                                                <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }*@
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <div>
     <a asp-action="MyTickets">Back to List</a>
