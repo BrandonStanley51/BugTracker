@@ -12,6 +12,7 @@ using BugTracker.Sevices;
 using BugTracker.Sevices.Interfaces;
 using BugTracker.Extensions;
 using BugTracker.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -20,12 +21,14 @@ namespace BugTracker.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IBTProjectService _projectService;
         private readonly IBTCompanyInfoService _infoService;
+        private readonly IBTCompanyInfoService _companyInfoService;
 
-        public ProjectsController(ApplicationDbContext context, IBTProjectService projectService, IBTCompanyInfoService infoService)
+        public ProjectsController(ApplicationDbContext context, IBTProjectService projectService, IBTCompanyInfoService infoService, IBTCompanyInfoService companyInfoService)
         {
             _context = context;
             _projectService = projectService;
             _infoService = infoService;
+            _companyInfoService = companyInfoService;
         }
 
         // GET: Projects
@@ -138,7 +141,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
         [HttpGet]
-        public async Task<IActionResult> AssignUsers(int id)
+        public async Task<IActionResult> AssignUsers(int? id)
         {
             ProjectMembersViewModel model = new();
             int companyId = User.Identity.GetCompanyId().Value;
@@ -189,17 +192,10 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> AllProjects()
         {
-            var project = await _context.Project
-                                            .Include(p => p.Members)
-                                            
-                                            .Include(p => p.StartDate)
-                                            .Include(p => p.EndDate)
-                                            .Include(p => p.Archived)
-                                            .Include(p => p.Company)
-                                            .Include(p => p.ProjectPriority).ToListAsync();
-            return View(project);
+            int companyId = User.Identity.GetCompanyId().Value;
+            List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
+            return View(projects);
         }
-
 
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)

@@ -115,12 +115,10 @@ namespace BugTracker.Sevices
         public async Task<List<Project>> GetAllProjectsByCompany(int companyId)
         {
             List<Project> projects = new();
-            projects = await _context.Project.Include(p => p.Company)
-                                             .Include(p => p.Members)
+            projects = await _context.Project.Include(p => p.Members)
                                              .Include(p => p.ProjectPriority)
-                                             .Where(p => p.CompanyId == companyId)
-                                             .ToListAsync();
-
+                                             
+                                             .Where(p => p.CompanyId == companyId).ToListAsync();
             return projects;
         }
 

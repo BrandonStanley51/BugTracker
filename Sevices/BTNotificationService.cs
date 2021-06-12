@@ -16,10 +16,11 @@ namespace BugTracker.Sevices
         private readonly ApplicationDbContext _context;
         private readonly IBTCompanyInfoService _companyInfoService;
 
-        public BTNotificationService(ApplicationDbContext context, IEmailSender emailSender)
+        public BTNotificationService(ApplicationDbContext context, IEmailSender emailSender, IBTCompanyInfoService companyInfoService)
         {
             _context = context;
             _emailSender = emailSender;
+            _companyInfoService = companyInfoService;
         }
 
         public async Task AdminsNotificationAsync(Notification notification, int companyId)
