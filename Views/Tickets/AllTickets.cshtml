@@ -5,98 +5,63 @@
 }
 
 <h1>All Tickets</h1>
+<div class="container-fluid">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th style="width:80px;">Title</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Project</th>
+                                <th>TicketStatus</th>
+                                <th>TicketType</th>
+                                <th>TicketPriority</th>
+                                <th>OwnerUser</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>@Html.DisplayFor(modelItem => item.Title)</strong></td>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Archived)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArchivedData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Project)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TicketType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TicketPriority)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TicketStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OwnerUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeveloperUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Archived)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArchivedData)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketType.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Created)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Updated)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ArchivedData)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketPriority.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketStatus.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
+                                                <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

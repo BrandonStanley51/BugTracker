@@ -276,17 +276,17 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AssignTicket(int? ticketId)
+        public async Task<IActionResult> AssignTicket(int? Id)
         {
-            if(!ticketId.HasValue)
+            if(!Id.HasValue)
             {
                 return NotFound();
             }
-
+            
             AssignDeveloperViewModel model = new();
             int companyId = User.Identity.GetCompanyId().Value;
 
-            model.Ticket = (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).FirstOrDefault(t=>t.Id==ticketId);
+            model.Ticket = (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).FirstOrDefault(t=>t.Id==Id);
             model.Developers = new SelectList(await _projectService.DevelopersOnProjectAsync(model.Ticket.ProjectId), "Id", "FullName");
 
             return View(model);
