@@ -48,6 +48,22 @@ namespace BugTracker.Controllers
 
             var project = await _context.Project
                 .Include(p=>p.Members)
+                .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.OwnerUser)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.DeveloperUser)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.Comments)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.Attachments)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.History)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.TicketPriority)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.TicketStatus)
+                                              .Include(p => p.Tickets)
+                                              .ThenInclude(t => t.TicketType)
                 .Include(p => p.Company)
                 .Include(p => p.ProjectPriority)
                 .FirstOrDefaultAsync(m => m.Id == id);
