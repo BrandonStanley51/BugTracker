@@ -34,8 +34,13 @@ namespace BugTracker.Controllers
         // GET: Projects
         public async Task<IActionResult> MyProjects()
         {
-            var applicationDbContext = _context.Project.Include(p => p.Company).Include(p => p.ProjectPriority);
-            return View(await applicationDbContext.ToListAsync());
+            int companyId = User.Identity.GetCompanyId().Value;
+            List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
+            return View(projects);
+
+            //bool user = await _projectService.IsUserOnProject(userId, projectId);
+            //List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
+            //return View(projects);
         }
 
         // GET: Projects/Details/5
@@ -208,9 +213,8 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> AllProjects()
         {
-            int companyId = User.Identity.GetCompanyId().Value;
-            List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
-            return View(projects);
+            var applicationDbContext = _context.Project.Include(p => p.Company).Include(p => p.ProjectPriority);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Projects/Delete/5

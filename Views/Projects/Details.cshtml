@@ -81,235 +81,66 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="MyProjects">Back to List</a>
 </div>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <div class="welcome-text">
-                    <h4>Hi, welcome back!</h4>
-                    <span>Datatable</span>
-                </div>
-            </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
-                </ol>
+
+
+<!-- row -->
+<div class="col-12">
+    <div class="card">
+        <div class="card-header justify-content-around">
+            <h4 class="card-title">Project Tickets</h4>
+            <a class="nav-link nav-item btn-outline-warning btn" asp-controller="Tickets" asp-action="Create">Create New</a>
+            
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example4" class="display" style="min-width: 845px">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Archived</th>
+                            <th>ArchivedData</th>
+                            <th>Project</th>
+                            <th>TicketType</th>
+                            <th>TicketPriority</th>
+                            <th>TicketStatus</th>
+                            <th>DeveloperUser</th>
+                            <th>OwnerUser</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Tickets)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Updated)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ArchivedData)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TicketPriority.Name)</td>
+                                <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketStatus.Name)</span></td>
+                                <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        <!-- row -->
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Basic Datatable</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example" class="display" style="min-width: 845px">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ashton Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>San Francisco</td>
-                                        <td>66</td>
-                                        <td>2009/01/12</td>
-                                        <td>$86,000</td>
-                                    </tr>                                    
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Datatable</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example2" class="display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ashton Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>San Francisco</td>
-                                        <td>66</td>
-                                        <td>2009/01/12</td>
-                                        <td>$86,000</td>
-                                    </tr>                                    
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Created
-                        </th>
-                        <th>
-                            Updated
-                        </th>
-                        <th>
-                            Archived
-                        </th>
-                        <th>
-                            ArchivedData
-                        </th>
-                        <th>
-                            Project
-                        </th>
-                        <th>
-                            TicketType
-                        </th>
-                        <th>
-                            TicketPriority
-                        </th>
-                        <th>
-                            TicketStatus
-                        </th>
-                        <th>
-                            OwnerUser
-                        </th>
-                        <th>
-                            DeveloperUser
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Tickets)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Created)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Updated)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Archived)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ArchivedData)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Project.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TicketType.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
