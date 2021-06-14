@@ -1,4 +1,5 @@
 ﻿@model BugTracker.Models.Ticket
+@*model IEnumerable<BugTracker.Models.Ticket>*@
 
 
 @{
@@ -6,7 +7,6 @@
 }
 
 <h1>Create</h1>
-@*model IEnumerable<BugTracker.Models.Ticket>*@
 <h4>Ticket</h4>
 <hr />
 <div class="row">
@@ -93,23 +93,26 @@
                                 <th><strong>@Html.DisplayNameFor(model => model.Created)</strong></th>
                                 <th><strong>@Html.DisplayNameFor(model => model.Updated)</strong></th>
                                 <th><strong>@Html.DisplayNameFor(model => model.Project)</strong></th>
-                                <th><strong>@Html.DisplayNameFor(model => model.TicketStatus)</strong></th>
-                                <th><strong>@Html.DisplayNameFor(model => model.TicketType)</strong></th>
-                                <th><strong>@Html.DisplayNameFor(model => model.TicketPriority)</strong></th>
-                                <th><strong>@Html.DisplayNameFor(model => model.OwnerUser)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketStatus.Name)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketType.Name)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.TicketPriority.Name)</strong></th>
+                                <th><strong>@Html.DisplayNameFor(model => model.OwnerUser.FullName)</strong></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @*foreach (var item in )*@
-                            
+                            @*foreach (var item in Model)*@
+                            {
                                 <tr>
-                                    <td><strong>@Html.DisplayFor(modelItem => Model.Title)</strong></td>
-                                    <td>Mr. Bobby</td>
-                                    <td>Dr. Jackson</td>
-                                    <td>01 August 2021</td>
-                                    <td><span class="badge light badge-success">Successful</span></td>
-                                    <td>$21.56</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.Title)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.Description)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.Created.DateTime)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.Updated)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.Project.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.TicketStatus.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.TicketType.Name)</td>
+                                    <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => Model.TicketPriority.Name)</span></td>
+                                    <td>@Html.DisplayFor(modelItem => Model.OwnerUser.FullName)</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
