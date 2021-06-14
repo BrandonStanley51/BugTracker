@@ -13,7 +13,7 @@
                     <table id="example" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
-                                <th style="width:80px;">Title</th>
+                                <th>Title</th>
                                 <th>Description</th>
                                 <th>Created</th>
                                 <th>Updated</th>
@@ -23,14 +23,13 @@
                                 <th>TicketPriority</th>
                                 <th>OwnerUser</th>
                                 <th></th>
-                            </tr>
+                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td><strong>@Html.DisplayFor(modelItem => item.Title)</strong></td>
-
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Updated)</td>
