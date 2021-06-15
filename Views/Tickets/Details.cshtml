@@ -1,4 +1,7 @@
-﻿@model BugTracker.Models.Ticket
+﻿@using BugTracker.Sevices
+@using Microsoft.AspNetCore.Identity
+@model BugTracker.Models.Ticket
+@inject UserManager<BTUser> userManager
 
 @{
     ViewData["Title"] = "Details";
@@ -76,7 +79,7 @@
             </div>
         </div>
     </div>
-</div>
+
     <div class="col-6">
         <h1>Ticket Details</h1>
         <div>
@@ -87,7 +90,7 @@
                     @Html.DisplayNameFor(model => model.Title)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.Title)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Description)
@@ -96,38 +99,110 @@
                     @Html.DisplayFor(model => model.Description)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model)
+                    @Html.DisplayNameFor(model => model.TicketPriority)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.TicketPriority.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model)
+                    @Html.DisplayNameFor(model => model.TicketStatus)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.TicketStatus.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model)
+                    @Html.DisplayNameFor(model => model.TicketType)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.TicketType.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model)
+                    @Html.DisplayNameFor(model => model.DeveloperUser)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.DeveloperUser.FullName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model)
+                    @Html.DisplayNameFor(model => model.OwnerUser)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model)
+                    @Html.DisplayFor(model => model.OwnerUser.FullName)
                 </dd>
             </dl>
         </div>
     </div>
+</div>
+
+
+@*=========================================================================================================================*@
+@*Task 1: Prompt the anonymous user to login to add a comment*@
+@if (!User.Identity.IsAuthenticated)
+{
+    <a class="btn-dark btn-block btn-sm rounded" asp-area="Identity"
+       asp-page="/Account/Login"
+       asp-route-returnUrl="@Url.Action("Details", "Posts", new { id = Model.Id})">Login to add a comment</a> }
+else
+{
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center">ADD COMMENT</h3>
+            <form asp-action="Create" asp-controller="Comments" method="post">
+                <input type="hidden" name="PostId" value="@Model.Id" />
+                <textarea name="Body" rows="10" class="form-control"></textarea>
+                <button class="btn btn-dark btn-block btn-sm" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>}
+
+<hr />
+<div class="btn-sm btn-dark btn-block">@Model.Comments.Count Comment(s)</div>
+@foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+{
+
+    //The three users who can edit a comment, the owner, the mod, and the person who made the comment (if it hasn't been moderated)
+    if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") && userManager.GetUserId(User) == comment.UserId)
+    { <!-- Button trigger modal --> //Ties the button to the modal through the PK of the comment
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-@comment.Id">
+            Edit Comment
+        </button> <!-- Modal --> //Same Id structure as the button
+        <div class="modal fade" id="edit-@comment.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="Comments" asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <!--Properties that cannot be changed on the edit-->
+                            <input type="hidden" asp-for="@comment.Id" />
+                            <input type="hidden" name="id" value="@comment.Id" />
+                            <input type="hidden" asp-for="@comment.PostId" />
+                            <input type="hidden" asp-for="@comment.UserId" />
+                            <input type="hidden" asp-for="@comment.Created" />
+
+                            <!-- lets the original author change what they wrote -->
+                            <div class="form-group">
+                                <label asp-for="@comment.Comment" class="control-label"></label>
+                                <input asp-for="@comment.Comment" class="form-control" />
+                                <span asp-validation-for="@comment.Comment" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> }
+}
 
 
 <div>
@@ -137,3 +212,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

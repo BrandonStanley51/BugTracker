@@ -50,6 +50,7 @@ namespace BugTracker
             services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
             services.AddScoped<IEmailSender, GmailEmailService>();
             services.AddScoped<IBTHistoryService, BTHistoryService>();
+            services.AddScoped<IBasicImageService, BasicImageService>();
 
 
             services.AddMvc();

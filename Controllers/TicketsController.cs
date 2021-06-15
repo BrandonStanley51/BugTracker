@@ -23,6 +23,8 @@ namespace BugTracker.Controllers
         private readonly IBTHistoryService _historyService;
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTNotificationService _notificationService;
+        private readonly IBasicImageService _basicImageService;
+
 
         public TicketsController(ApplicationDbContext context,
                                     UserManager<BTUser> userManager,
@@ -30,7 +32,7 @@ namespace BugTracker.Controllers
                                     IBTTicketService ticketService,
                                     IBTHistoryService historyService,
                                     IBTCompanyInfoService companyInfoService,
-                                    IBTNotificationService notificationService)
+                                    IBTNotificationService notificationService, IBasicImageService basicImageService)
         {
             _context = context;
             _userManager = userManager;
@@ -39,6 +41,7 @@ namespace BugTracker.Controllers
             _historyService = historyService;
             _companyInfoService = companyInfoService;
             _notificationService = notificationService;
+            _basicImageService = basicImageService;
         }
 
         // GET: Tickets
@@ -74,7 +77,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-
+            
             var ticket = await _context.Ticket
                 .Include(t => t.DeveloperUser)
                 .Include(t => t.OwnerUser)
