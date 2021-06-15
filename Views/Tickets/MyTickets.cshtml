@@ -43,7 +43,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>                                    
                                     <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
                                     <td>@Html.DisplayFor(modelItem => item.TicketStatus.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.DeveloperUser)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
                                     <td>
                                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

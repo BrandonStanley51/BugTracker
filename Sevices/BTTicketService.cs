@@ -49,11 +49,12 @@ namespace BugTracker.Sevices
 
         public async Task<List<Ticket>> GetAllTicketsByCompanyAsync(int companyId)
         {
+            List<Ticket> tickets = new();
             try
             {
-                List<Ticket> tickets = await _context.Project.Include(p => p.Company)
-                                                             .Where(p => p.CompanyId == companyId)
-                                                             .SelectMany(p => p.Tickets)
+                tickets = await _context.Project.Include(p => p.Company)
+                                                        .Where(p=>p.CompanyId == companyId)
+                                                                .SelectMany(p => p.Tickets)
                                                                 .Include(t => t.Attachments)
                                                                 .Include(t => t.Comments)
                                                                 .Include(t => t.History)
@@ -64,12 +65,12 @@ namespace BugTracker.Sevices
                                                                 .Include(t => t.TicketType)
                                                                 .Include(t => t.Project)
                                                                 .ToListAsync();
-                return tickets;
             }
             catch
             {
                 throw;
             }
+                return tickets;
         }
 
         public async Task<List<Ticket>> GetAllTicketsByPriorityAsync(int companyId, string priorityName)

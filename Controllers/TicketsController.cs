@@ -31,7 +31,7 @@ namespace BugTracker.Controllers
                                     IBTHistoryService historyService,
                                     IBTCompanyInfoService companyInfoService,
                                     IBTNotificationService notificationService)
-{
+        {
             _context = context;
             _userManager = userManager;
             _projectService = projectService;
@@ -48,10 +48,10 @@ namespace BugTracker.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-       // public Task<IActionResult> MyTickets()
+        // public Task<IActionResult> MyTickets()
         //{
-            
-       // }
+
+        // }
 
 
         public async Task<IActionResult> AllTickets()
@@ -110,15 +110,15 @@ namespace BugTracker.Controllers
             {
 
 
-            ViewData["ProjectId"] = new SelectList(await _projectService.ListUserProjectsAsync(btUser.Id), "Id", "Name");
+                ViewData["ProjectId"] = new SelectList(await _projectService.ListUserProjectsAsync(btUser.Id), "Id", "Name");
             }
-            
-           
+
+
 
 
             ViewData["TicketPriorityId"] = new SelectList(_context.Set<TicketPriority>(), "Id", "Name");
             ViewData["TicketTypeId"] = new SelectList(_context.Set<TicketType>(), "Id", "Name");
-            
+
             return View();
         }
 
@@ -169,17 +169,17 @@ namespace BugTracker.Controllers
                     RecipientId = projectManager?.Id
                 };
                 if (projectManager != null)
-            { 
-                await _notificationService.SaveNotificationAsync(notification);
+                {
+                    await _notificationService.SaveNotificationAsync(notification);
                 }
                 else
                 {
-                await _notificationService.AdminsNotificationAsync(notification, companyId);
-                    
+                    await _notificationService.AdminsNotificationAsync(notification, companyId);
+
                 }
                 #endregion
 
-                return RedirectToAction("Details","Projects",new { id=ticket.ProjectId});
+                return RedirectToAction("Details", "Projects", new { id = ticket.ProjectId });
             }
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.DeveloperUserId);
             ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.OwnerUserId);
@@ -278,15 +278,15 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> AssignTicket(int? Id)
         {
-            if(!Id.HasValue)
+            if (!Id.HasValue)
             {
                 return NotFound();
             }
-            
+
             AssignDeveloperViewModel model = new();
             int companyId = User.Identity.GetCompanyId().Value;
 
-            model.Ticket = (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).FirstOrDefault(t=>t.Id==Id);
+            model.Ticket = (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).FirstOrDefault(t => t.Id == Id);
             model.Developers = new SelectList(await _projectService.DevelopersOnProjectAsync(model.Ticket.ProjectId), "Id", "FullName");
 
             return View(model);
@@ -296,12 +296,12 @@ namespace BugTracker.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AssignTicket(AssignDeveloperViewModel viewModel)
         {
-            if(!string.IsNullOrEmpty(viewModel.DeveloperId))
+            if (!string.IsNullOrEmpty(viewModel.DeveloperId))
             {
                 int companyId = User.Identity.GetCompanyId().Value;
 
                 BTUser btUser = await _userManager.GetUserAsync(User);
-                BTUser developer = (await _companyInfoService.GetAllMembersAsync(companyId)).FirstOrDefault(m=>m.Id == viewModel.DeveloperId);
+                BTUser developer = (await _companyInfoService.GetAllMembersAsync(companyId)).FirstOrDefault(m => m.Id == viewModel.DeveloperId);
                 BTUser projectManager = await _projectService.GetProjectManagerAsync(viewModel.Ticket.ProjectId);
 
                 Ticket oldTicket = await _context.Ticket
@@ -311,11 +311,11 @@ namespace BugTracker.Controllers
                                                     .Include(t => t.Project)
                                                     .Include(t => t.DeveloperUser)
                                                     .AsNoTracking().FirstOrDefaultAsync(t => t.Id == viewModel.Ticket.Id);
-                
-                await _ticketService.AssignTicketAsync(viewModel.Ticket.Id, viewModel.DeveloperId);               
-                
-                
-                
+
+                await _ticketService.AssignTicketAsync(viewModel.Ticket.Id, viewModel.DeveloperId);
+
+
+
                 Ticket newTicket = await _context.Ticket
                                                     .Include(t => t.TicketPriority)
                                                     .Include(t => t.TicketStatus)
@@ -323,11 +323,11 @@ namespace BugTracker.Controllers
                                                     .Include(t => t.Project)
                                                     .Include(t => t.DeveloperUser)
                                                     .AsNoTracking().FirstOrDefaultAsync(t => t.Id == viewModel.Ticket.Id);
-                
+
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
 
             }
-            return RedirectToAction("Details","Ticket",  new { id = viewModel.Ticket.Id });
+            return RedirectToAction("Details", "Ticket", new { id = viewModel.Ticket.Id });
         }
 
 
