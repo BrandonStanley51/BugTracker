@@ -51,6 +51,7 @@ namespace BugTracker
             services.AddScoped<IEmailSender, GmailEmailService>();
             services.AddScoped<IBTHistoryService, BTHistoryService>();
             services.AddScoped<IBasicImageService, BasicImageService>();
+            services.AddScoped<IBTInviteService, BTInviteService>();
 
 
             services.AddMvc();
