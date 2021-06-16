@@ -134,83 +134,49 @@
 </div>
 
 
-@*=========================================================================================================================*@
-@*Task 1: Prompt the anonymous user to login to add a comment*@
-@if (!User.Identity.IsAuthenticated)
-{
-    <a class="btn-dark btn-block btn-sm rounded" asp-area="Identity"
-       asp-page="/Account/Login"
-       asp-route-returnUrl="@Url.Action("Details", "Posts", new { id = Model.Id})">Login to add a comment</a> }
-else
-{
+
     <div class="row">
         <div class="col">
             <h3 class="text-center">ADD COMMENT</h3>
-            <form asp-action="Create" asp-controller="Comments" method="post">
-                <input type="hidden" name="PostId" value="@Model.Id" />
-                <textarea name="Body" rows="10" class="form-control"></textarea>
+            <form asp-action="Create" asp-controller="TicketComments" method="post">
+                <input type="hidden" value="@Model.Id" name="TicketId" />
+                <textarea name="Comment" rows="10" class="form-control"></textarea>
                 <button class="btn btn-dark btn-block btn-sm" type="submit">Submit</button>
             </form>
         </div>
-    </div>}
+    </div>
 
 <hr />
 <div class="btn-sm btn-dark btn-block">@Model.Comments.Count Comment(s)</div>
-@foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
-{
 
-    //The three users who can edit a comment, the owner, the mod, and the person who made the comment (if it hasn't been moderated)
-    if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") && userManager.GetUserId(User) == comment.UserId)
-    { <!-- Button trigger modal --> //Ties the button to the modal through the PK of the comment
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-@comment.Id">
-            Edit Comment
-        </button> <!-- Modal --> //Same Id structure as the button
-        <div class="modal fade" id="edit-@comment.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
+    <ul class="contacts">
+        @foreach (TicketComment comment in Model.Comments.OrderByDescending(c => c.Created))
+        {
+            <li class="active dz-chat-user">
+                <div class="d-flex bd-highlight">
+                    <div class="img_cont">
+                        <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="" />
+                        <span class="online_icon"></span>
                     </div>
-                    <div class="modal-body">
-                        <form asp-controller="Comments" asp-action="Edit">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <!--Properties that cannot be changed on the edit-->
-                            <input type="hidden" asp-for="@comment.Id" />
-                            <input type="hidden" name="id" value="@comment.Id" />
-                            <input type="hidden" asp-for="@comment.PostId" />
-                            <input type="hidden" asp-for="@comment.UserId" />
-                            <input type="hidden" asp-for="@comment.Created" />
-
-                            <!-- lets the original author change what they wrote -->
-                            <div class="form-group">
-                                <label asp-for="@comment.Comment" class="control-label"></label>
-                                <input asp-for="@comment.Comment" class="form-control" />
-                                <span asp-validation-for="@comment.Comment" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                            </div>
-                        </form>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div style="font-size:x-small;">@comment.Created.ToString("MM.dd.yyyy")</div>
+                    <div class="user_info">
+                        <span>@comment.User?.FullName</span>
+                        <p>@comment.Comment</p>
                     </div>
                 </div>
-            </div>
-        </div> }
-}
+            </li>
 
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="MyTickets">Back to List</a>
+        }
+    </ul>
 </div>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="MyTickets">Back to List</a>
+        </div>
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
 
 

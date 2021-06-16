@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
 using BugTracker.Sevices.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -16,11 +17,13 @@ namespace BugTracker.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IBasicImageService _basicImageService;
+        private readonly UserManager<BTUser> _userManager;
 
-        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService)
+        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService, UserManager<BTUser> userManager)
         {
             _context = context;
             _basicImageService = basicImageService;
+            _userManager = userManager;
         }
 
         // GET: TicketComments
@@ -61,16 +64,19 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Comment,Created,TicketId,UserId")] TicketComment ticketComment)
+        public async Task<IActionResult> Create([Bind("Comment,TicketId")] TicketComment ticketComment)
         {
             if (ModelState.IsValid)
             {
+                BTUser btUser = await _userManager.GetUserAsync(User);
+                ticketComment.UserId = btUser.Id;
+                ticketComment.Created = DateTimeOffset.Now;
                 _context.Add(ticketComment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             ViewData["TicketId"] = new SelectList(_context.Ticket, "Id", "Description", ticketComment.TicketId);
-            return View(ticketComment);
+                return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
+            
         }
 
         // GET: TicketComments/Edit/5

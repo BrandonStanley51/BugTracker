@@ -26,12 +26,7 @@ namespace BugTracker.Models
         
         [DisplayName("Team Member")]
         public string UserId { get; set; }
-        //
-        public string ModeratorId { get; set; }
-        public DateTime? Moderated { get; set; }
-        public string ModeratedBody { get; set; }
-        public ModerationType? ModerationType { get; set; }
-        public string ModeratedReason { get; set; }
+
         
         public virtual Ticket Ticket { get; set; }
         //
