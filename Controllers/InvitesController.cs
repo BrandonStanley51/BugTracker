@@ -34,7 +34,7 @@ namespace BugTracker.Controllers
         {
             _context = context;
             _userManager = userManager;
-            _protector = dataProtectionProvider.CreateProtector("CF.RockwellTracker.21");
+            _protector = dataProtectionProvider.CreateProtector("CF.BugTracker.21");
             _projectService = projectService;
             _emailService = emailService;
             _inviteService = inviteService;
@@ -76,7 +76,7 @@ namespace BugTracker.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                model.ProjectsList = new SelectList(_context.Projects, "Id", "Name");
+                model.ProjectsList = new SelectList(_context.Project, "Id", "Name");
             }
             else if (User.IsInRole("ProjectManager"))
             {
@@ -125,7 +125,7 @@ namespace BugTracker.Controllers
                 IsValid = true
             };
 
-            _context.Invites.Add(model);
+            _context.Invite.Add(model);
             _context.SaveChanges();
 
             return RedirectToAction("Dashboard", "Home");

@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Sevices.Interfaces;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace BugTracker.Sevices
 
         public async Task<Invite> GetInviteAsync(Guid token, string email)
         {
-            Invite invite = await _context.Invites.Include(i => i.Company)
+            Invite invite = await _context.Invite.Include(i => i.Company)
                                             .Include(i => i.Project)
                                             .Include(i => i.Invitor)
                                             .FirstOrDefaultAsync(i => i.CompanyToken == token && i.InviteeEmail == email);
@@ -38,7 +39,7 @@ namespace BugTracker.Sevices
 
         public async Task<Invite> GetInviteAsync(int id)
         {
-            Invite invite = await _context.Invites.Include(i => i.Company)
+            Invite invite = await _context.Invite.Include(i => i.Company)
                                             .Include(i => i.Project)
                                             .Include(i => i.Invitor)
                                             .FirstOrDefaultAsync(i => i.Id == id);
@@ -48,13 +49,13 @@ namespace BugTracker.Sevices
 
         public async Task<bool> AnyInviteAsync(Guid token, string email)
         {
-            return await _context.Invites.AnyAsync(i => i.CompanyToken == token && i.InviteeEmail == email && i.IsValid == true);
+            return await _context.Invite.AnyAsync(i => i.CompanyToken == token && i.InviteeEmail == email && i.IsValid == true);
         }
 
         public async Task<bool> AcceptInviteAsync(Guid? code, string userId)
         {
 
-            Invite invite = await _context.Invites.FirstOrDefaultAsync(i => i.CompanyToken == code);
+            Invite invite = await _context.Invite.FirstOrDefaultAsync(i => i.CompanyToken == code);
 
             if (invite == null)
             {
@@ -82,12 +83,12 @@ namespace BugTracker.Sevices
                 return false;
             }
 
-            var invite = await _context.Invites.FirstOrDefaultAsync(i => i.CompanyToken == code);
+            var invite = await _context.Invite.FirstOrDefaultAsync(i => i.CompanyToken == code);
 
-            if ((DateTime.Now - (await _context.Invites.FirstOrDefaultAsync(i => i.CompanyToken == code)).InviteDate).TotalDays <= 7)
+            if ((DateTime.Now - (await _context.Invite.FirstOrDefaultAsync(i => i.CompanyToken == code)).InviteDate).TotalDays <= 7)
             {
 
-                bool result = (await _context.Invites.FirstOrDefaultAsync(i => i.CompanyToken == code)).IsValid;
+                bool result = (await _context.Invite.FirstOrDefaultAsync(i => i.CompanyToken == code)).IsValid;
 
                 return result;
             }
