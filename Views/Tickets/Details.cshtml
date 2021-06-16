@@ -135,6 +135,29 @@
 
 
 
+<div>
+    <form asp-action="Create" asp-controller="TicketAttachments" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="@Model.Id" name="TicketId">
+
+
+        <div class="media-body ml-3">
+            <label class="form-label d-block mb-2">Add Attachment</label>
+            <label>
+                Description
+                <input asp-for="@Model.Attachments.FirstOrDefault().Description" type="text" class="form-control" />
+            </label><br />
+            <label class="btn btn-outline-primary btn-sm">
+                <input asp-for="@Model.Attachments.FirstOrDefault().FormFile" type="file" />
+            </label>
+            <button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+
+
     <div class="row">
         <div class="col">
             <h3 class="text-center">ADD COMMENT</h3>

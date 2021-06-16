@@ -1,25 +1,16 @@
-﻿
-
+﻿@model BugTracker.Models.ViewModels.DashboardViewModel
 <div class="container-fluid">
     <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0">
             <div class="welcome-text">
-                <h1>?????#######?????: Dashboard</h1>
+                <h1>@Model.Company.Name: Dashboard</h1>
             </div>
-
-           
-        </div>
-        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">To Be Deteremined</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">To Be Deteremined</a></li>
-            </ol>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xl-9 col-xxl-12">
             <div class="row">
-
 
                 <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
                     <div class="card bg-success	overflow-hidden">
@@ -315,8 +306,8 @@
         </div>
 
     </div>
-           </div>
-               
-                @section Scripts {
-                    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-                }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -73,13 +73,16 @@
         Members:
         @foreach (BTUser member in Model.Members)
         {
+            <div class="container">
             @member.FullName
+            </div>
         }
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="MyProjects">Back to List</a>
+    <a class="nav-link" asp-controller="Projects" asp-action="AssignUsers" asp-route-id="@Model.Id">Manage Members</a>
 </div>
 
 
