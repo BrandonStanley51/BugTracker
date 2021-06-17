@@ -73,10 +73,11 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Create()
         {
             InviteViewModel model = new();
+            var companyId = User.Identity.GetCompanyId().Value;
 
             if (User.IsInRole("Admin"))
             {
-                model.ProjectsList = new SelectList(_context.Project, "Id", "Name");
+                model.ProjectsList = new SelectList(await _projectService.GetAllProjectsByCompany(companyId),"Id", "Name");
             }
             else if (User.IsInRole("ProjectManager"))
             {
@@ -104,7 +105,7 @@ namespace BugTracker.Controllers
 
             var callbackUrl = Url.Action("ProcessInvite", "Invites", new { token, email }, protocol: Request.Scheme);
 
-            var body = "Please join my Company." + Environment.NewLine + "Please click the following link to join <a href=\"" + callbackUrl + "\">COLLABORATE</a>";
+            var body = viewModel.Message + Environment.NewLine + "Please click the following link to join <a href=\"" + callbackUrl + "\">COLLABORATE</a>";
             var destination = viewModel.Email;
             var subject = "Company Invite";
 

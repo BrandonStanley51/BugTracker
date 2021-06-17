@@ -1,6 +1,7 @@
-﻿@using BugTracker.Sevices
+﻿@model BugTracker.Models.Ticket
 @using Microsoft.AspNetCore.Identity
-@model BugTracker.Models.Ticket
+@using BugTracker.Sevices.Interfaces
+@inject IBTFileService BTFileService 
 @inject UserManager<BTUser> userManager
 
 @{

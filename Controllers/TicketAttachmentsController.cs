@@ -84,10 +84,10 @@ namespace BugTracker.Controllers
             ViewData["TicketId"] = new SelectList(_context.Ticket, "Id", "Description", ticketAttachment.TicketId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", ticketAttachment.UserId);
             return View(ticketAttachment);
+        }
 
-
-            // GET: TicketAttachments/Edit/5
-            public async Task<IActionResult> Edit(int? id)
+        // GET: TicketAttachments/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -178,3 +178,4 @@ namespace BugTracker.Controllers
         }
     }
 }
+

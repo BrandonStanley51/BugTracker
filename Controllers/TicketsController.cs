@@ -24,7 +24,7 @@ namespace BugTracker.Controllers
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTNotificationService _notificationService;
         private readonly IBasicImageService _basicImageService;
-
+        private readonly IBTFileService fileService;
 
         public TicketsController(ApplicationDbContext context,
                                     UserManager<BTUser> userManager,
@@ -32,7 +32,7 @@ namespace BugTracker.Controllers
                                     IBTTicketService ticketService,
                                     IBTHistoryService historyService,
                                     IBTCompanyInfoService companyInfoService,
-                                    IBTNotificationService notificationService, IBasicImageService basicImageService)
+                                    IBTNotificationService notificationService, IBasicImageService basicImageService, IBTFileService fileService)
         {
             _context = context;
             _userManager = userManager;
@@ -42,6 +42,7 @@ namespace BugTracker.Controllers
             _companyInfoService = companyInfoService;
             _notificationService = notificationService;
             _basicImageService = basicImageService;
+            this.fileService = fileService;
         }
 
         // GET: Tickets
@@ -80,14 +81,14 @@ namespace BugTracker.Controllers
             
             var ticket = await _context.Ticket
                 .Include(t => t.DeveloperUser)
-                .Include(t => t.Comments)
-                .Include(t => t.Attachments)
-                .Include(t => t.History)
-                .Include(t => t.OwnerUser)
                 .Include(t => t.Project)
+                .Include(t => t.OwnerUser)
+                .Include(t => t.TicketPriority)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.TicketType)
-                .Include(t => t.TicketPriority)
+                .Include(t => t.Comments)
+                .Include(t => t.Attachments)
+                .Include(t => t.History).ThenInclude(t=>t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
