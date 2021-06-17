@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using BugTracker.Sevices.Interfaces;
 using BugTracker.Extensions;
 using BugTracker.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
@@ -57,7 +58,7 @@ namespace BugTracker.Controllers
 
         // }
 
-
+        [Authorize(Roles = "Admin, ProjectManager")]
         public async Task<IActionResult> AllTickets()
         {
             var applicationDbContext = await _context.Ticket
@@ -97,8 +98,8 @@ namespace BugTracker.Controllers
 
             return View(ticket);
         }
-
         // GET: Tickets/Create
+        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
         public async Task<IActionResult> Create()
         {
             //Get current user
@@ -132,6 +133,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId")] Ticket ticket)
@@ -178,6 +180,7 @@ namespace BugTracker.Controllers
                 if (projectManager != null)
                 {
                     await _notificationService.SaveNotificationAsync(notification);
+                    await _notificationService.EmailNotificationAsync(notification, "New Ticket Added");
                 }
                 else
                 {
@@ -230,6 +233,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
+            Notification notification;
 
             if (ModelState.IsValid)
             {
@@ -250,6 +254,40 @@ namespace BugTracker.Controllers
                     ticket.Updated = DateTimeOffset.Now;
                     _context.Update(ticket);
                     await _context.SaveChangesAsync();
+
+                    //Create and Save a Notification
+                    notification = new()
+                    {
+                        TicketId = ticket.Id,
+                        Title = $"Ticket modified on project - {oldTicket.Project.Name}",
+                        Message = $"Ticket: [{ticket.Id}]:{ticket.Title} updated by {btUser?.FullName}",
+                        Created = DateTimeOffset.Now,
+                        SenderId = btUser?.Id,
+                        RecipientId = projectManager?.Id
+                    };
+                    if (projectManager != null)
+                    {
+                        await _notificationService.SaveNotificationAsync(notification);
+                    }
+                    else
+                    {
+                        await _notificationService.AdminsNotificationAsync(notification, companyId);
+
+                    }
+                    //Alert Dev if ticket is Assigned
+                    if(ticket.DeveloperUserId != null)
+                    {
+                        notification = new()
+                        {
+                            TicketId = ticket.Id,
+                            Title = $"Ticket assigned to you has been modified" ,
+                            Message = $"Ticket: [{ticket.Id}]:{ticket.Title} updated by {btUser?.FullName}",
+                            Created = DateTimeOffset.Now,
+                            SenderId = btUser?.Id,
+                            RecipientId = projectManager?.Id
+                        };
+                        await _notificationService.SaveNotificationAsync(notification);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -283,6 +321,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
         public async Task<IActionResult> AssignTicket(int? Id)
         {
             if (!Id.HasValue)
@@ -301,6 +340,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
         public async Task<IActionResult> AssignTicket(AssignDeveloperViewModel viewModel)
         {
             if (!string.IsNullOrEmpty(viewModel.DeveloperId))
@@ -334,7 +374,7 @@ namespace BugTracker.Controllers
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
 
             }
-            return RedirectToAction("Details", "Ticket", new { id = viewModel.Ticket.Id });
+            return RedirectToAction("Details", new { id = viewModel.Ticket.Id });
         }
 
 

@@ -92,6 +92,8 @@ namespace BugTracker.Sevices
             {
                 foreach(BTUser btUser in members)
                 {
+                    notification.RecipientId = btUser.Id;
+
                     await EmailNotificationAsync(notification, notification.Title);
                 }
             }

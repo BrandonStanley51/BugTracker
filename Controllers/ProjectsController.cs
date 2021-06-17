@@ -13,6 +13,7 @@ using BugTracker.Sevices.Interfaces;
 using BugTracker.Extensions;
 using BugTracker.Models.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
@@ -79,7 +80,7 @@ namespace BugTracker.Controllers
 
             return View(project);
         }
-
+        [Authorize(Roles = "Administrator, ProjectManager")]
         // GET: Projects/Create
         public IActionResult Create()
         {
@@ -91,6 +92,7 @@ namespace BugTracker.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageFileName,ImageFileData,ImageContentType,Archived")] Project project)
@@ -105,7 +107,7 @@ namespace BugTracker.Controllers
             ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Name", project.ProjectPriorityId);
             return View(project);
         }
-
+        [Authorize(Roles = "Administrator, ProjectManager, Submitter")]
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -127,8 +129,8 @@ namespace BugTracker.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-       
-            [HttpPost]
+        [Authorize(Roles = "Administrator, ProjectManager, Submitter")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageFileName,ImageFileData,ImageContentType,Archived")] Project project)
         {
@@ -162,6 +164,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin, ProjectManager")]
         public async Task<IActionResult> AssignUsers(int? id)
         {
             ProjectMembersViewModel model = new();
@@ -182,6 +185,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ProjectManager")]
         public async Task<IActionResult> AssignUsers(ProjectMembersViewModel model)
         { 
             if (ModelState.IsValid)
@@ -210,7 +214,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Administrator, ProjectManager")]
         public async Task<IActionResult> AllProjects()
         {
             int companyId = User.Identity.GetCompanyId().Value;
@@ -219,6 +223,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "Administrator, ProjectManager, Submitter")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -239,6 +244,7 @@ namespace BugTracker.Controllers
         }
 
         // POST: Projects/Delete/5
+        [Authorize(Roles = "Administrator, ProjectManager, Submitter")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -43,9 +43,15 @@
                                     <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
                                     <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.ProjectPriority.Name)</span></td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        @if (User.IsInRole("Admin, ProjectManager"))
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+}
+                                        @if (User.IsInRole("Admin, ProjectManager"))
+                                        { 
+                                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        }
+                                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                                     </td>
                                 </tr>
                             }
