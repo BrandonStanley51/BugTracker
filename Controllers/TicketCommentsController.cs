@@ -10,6 +10,7 @@ using BugTracker.Data;
 using BugTracker.Models;
 using BugTracker.Sevices.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using BugTracker.Extensions;
 
 namespace BugTracker.Controllers
 {
@@ -18,12 +19,16 @@ namespace BugTracker.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IBasicImageService _basicImageService;
         private readonly UserManager<BTUser> _userManager;
+        private readonly IBTProjectService _projectService;
+        private readonly IBTNotificationService _notificationService;
 
-        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService, UserManager<BTUser> userManager)
+        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService, UserManager<BTUser> userManager, IBTProjectService projectService, IBTNotificationService notificationService)
         {
             _context = context;
             _basicImageService = basicImageService;
             _userManager = userManager;
+            _projectService = projectService;
+            _notificationService = notificationService;
         }
 
         // GET: TicketComments
@@ -66,13 +71,51 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Comment,TicketId")] TicketComment ticketComment)
         {
+            Notification notification;
+
             if (ModelState.IsValid)
             {
+                int companyId = User.Identity.GetCompanyId().Value;                
+                BTUser projectManager = await _projectService.GetProjectManagerAsync(ticketComment.Ticket.ProjectId);
                 BTUser btUser = await _userManager.GetUserAsync(User);
                 ticketComment.UserId = btUser.Id;
                 ticketComment.Created = DateTimeOffset.Now;
                 _context.Add(ticketComment);
                 await _context.SaveChangesAsync();
+
+                notification = new()
+                {
+                    TicketId = ticketComment.TicketId,
+                    Title = $"Comment was added to ticket your assigned to.",
+                    Message = $"Ticket: Ticket comment added by {btUser?.FullName}",
+                    Created = DateTimeOffset.Now,
+                    SenderId = btUser?.Id,
+                    RecipientId = projectManager?.Id
+                };
+                if (projectManager != null)
+                {
+                    await _notificationService.SaveNotificationAsync(notification);
+                }
+                else
+                {
+                    await _notificationService.AdminsNotificationAsync(notification, companyId);
+
+                }
+                //Alert Dev if ticket is Assigned
+                if (ticketComment.Ticket.DeveloperUserId != null)
+                {
+                    notification = new()
+                    {
+                        TicketId = ticketComment.Ticket.Id,
+                        Title = $"Ticket assigned to you has been modified",
+                        Message = $"Ticket: Ticket comment was added by {btUser?.FullName}",
+                        Created = DateTimeOffset.Now,
+                        SenderId = btUser?.Id,
+                        RecipientId = ticketComment.Ticket.DeveloperUserId
+                    };
+                    await _notificationService.SaveNotificationAsync(notification);
+
+                }
             }
             ViewData["TicketId"] = new SelectList(_context.Ticket, "Id", "Description", ticketComment.TicketId);
                 return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });

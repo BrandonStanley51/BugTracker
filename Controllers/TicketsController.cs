@@ -283,7 +283,7 @@ namespace BugTracker.Controllers
                             Message = $"Ticket: [{ticket.Id}]:{ticket.Title} updated by {btUser?.FullName}",
                             Created = DateTimeOffset.Now,
                             SenderId = btUser?.Id,
-                            RecipientId = projectManager?.Id
+                            RecipientId = ticket.DeveloperUserId
                         };
                         await _notificationService.SaveNotificationAsync(notification);
                         

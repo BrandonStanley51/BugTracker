@@ -83,6 +83,8 @@
         <h3 class="text-center">ADD COMMENT</h3>
         <form asp-action="Create" asp-controller="TicketComments" method="post">
             <input type="hidden" value="@Model.Id" name="TicketId" />
+            <input type="hidden" value="@Model.ProjectId" name="Ticket.ProjectId" />
+            <input type="hidden" value="@Model.DeveloperUserId" name="Ticket.DeveloperUserId" />
             <textarea name="Comment" rows="10" class="form-control"></textarea>
             <button class="btn btn-dark btn-block btn-sm" type="submit">Submit</button>
         </form>

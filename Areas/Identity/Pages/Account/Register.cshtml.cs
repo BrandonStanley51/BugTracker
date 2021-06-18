@@ -30,12 +30,13 @@ namespace BugTracker.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IBasicImageService _basicImageService;
         private readonly IConfiguration _configuration;
+        private readonly IBTCompanyInfoService _btCompanyInfoService;
 
         public RegisterModel(
             UserManager<BTUser> userManager,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, IBasicImageService basicImageService, IConfiguration configuration)
+            IEmailSender emailSender, IBasicImageService basicImageService, IConfiguration configuration, IBTCompanyInfoService btCompanyInfoService = null)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +44,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _basicImageService = basicImageService;
             _configuration = configuration;
+            _btCompanyInfoService = btCompanyInfoService;
         }
 
         [BindProperty]
@@ -96,11 +98,14 @@ namespace BugTracker.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new BTUser
+                
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
+                    //CompanyId = new(),
+                    
 
                     AvatarImageData = (await _basicImageService.EncodeFileAsync(Input.ImageFile)) ??
                                        await _basicImageService.EncodeFileAsync(_configuration["DefaultAvatarImage"]),
