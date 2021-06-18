@@ -18,12 +18,15 @@ using BugTracker.Sevices.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using BugTracker.Data;
+using BugTracker.Models.Enums;
 
 namespace BugTracker.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<BTUser> _signInManager;
         private readonly UserManager<BTUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -36,7 +39,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             UserManager<BTUser> userManager,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, IBasicImageService basicImageService, IConfiguration configuration, IBTCompanyInfoService btCompanyInfoService = null)
+            IEmailSender emailSender, IBasicImageService basicImageService, IConfiguration configuration, IBTCompanyInfoService btCompanyInfoService = null, ApplicationDbContext context = null)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,6 +48,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             _basicImageService = basicImageService;
             _configuration = configuration;
             _btCompanyInfoService = btCompanyInfoService;
+            _context = context;
         }
 
         [BindProperty]
@@ -65,6 +69,12 @@ namespace BugTracker.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [Display(Name = "Company Name")]
+            public string CompanyName { get; set; }            
+            [Required]
+            [Display(Name = "Company Description")]
+            public string CompanyDescription { get; set; }            
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
@@ -119,7 +129,21 @@ namespace BugTracker.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    //Add new Registrant a role of "Admin"
+                    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    Company company = new()
+                    {
+                        Name = Input.CompanyName,
+                        Description = Input.CompanyDescription,
+                    };
+                    _context.Add(company);
+                    await _context.SaveChangesAsync();
+                    user.CompanyId = company.Id;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+
+
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
