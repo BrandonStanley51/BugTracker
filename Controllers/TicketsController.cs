@@ -25,7 +25,7 @@ namespace BugTracker.Controllers
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTNotificationService _notificationService;
         private readonly IBasicImageService _basicImageService;
-        private readonly IBTFileService fileService;
+        
 
         public TicketsController(ApplicationDbContext context,
                                     UserManager<BTUser> userManager,
@@ -33,7 +33,7 @@ namespace BugTracker.Controllers
                                     IBTTicketService ticketService,
                                     IBTHistoryService historyService,
                                     IBTCompanyInfoService companyInfoService,
-                                    IBTNotificationService notificationService, IBasicImageService basicImageService, IBTFileService fileService)
+                                    IBTNotificationService notificationService, IBasicImageService basicImageService)
         {
             _context = context;
             _userManager = userManager;
@@ -43,7 +43,7 @@ namespace BugTracker.Controllers
             _companyInfoService = companyInfoService;
             _notificationService = notificationService;
             _basicImageService = basicImageService;
-            this.fileService = fileService;
+            
         }
 
         // GET: Tickets
@@ -99,7 +99,6 @@ namespace BugTracker.Controllers
             return View(ticket);
         }
         // GET: Tickets/Create
-        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
         public async Task<IActionResult> Create()
         {
             //Get current user
@@ -133,7 +132,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, ProjectManager, Submitter")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId")] Ticket ticket)
@@ -287,6 +286,7 @@ namespace BugTracker.Controllers
                             RecipientId = projectManager?.Id
                         };
                         await _notificationService.SaveNotificationAsync(notification);
+                        
                     }
                 }
                 catch (DbUpdateConcurrencyException)
@@ -372,7 +372,20 @@ namespace BugTracker.Controllers
                                                     .AsNoTracking().FirstOrDefaultAsync(t => t.Id == viewModel.Ticket.Id);
 
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
-
+                Notification notification = new()
+                {
+                    TicketId = newTicket.Id,
+                    Title = $"You've Been Assigned A Ticket",
+                    Message = $"New  Ticket: [{newTicket?.Title} Was Assigned By {btUser?.FullName}",
+                    Created = DateTimeOffset.Now,
+                    SenderId = btUser?.Id,
+                    RecipientId = viewModel.DeveloperId,
+                };
+                if (viewModel.DeveloperId != null)
+                {
+                    await _notificationService.SaveNotificationAsync(notification);
+                    await _notificationService.EmailNotificationAsync(notification, "message has been sent.");
+                }
             }
             return RedirectToAction("Details", new { id = viewModel.Ticket.Id });
         }

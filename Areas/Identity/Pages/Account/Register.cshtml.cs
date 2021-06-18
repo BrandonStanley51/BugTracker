@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BugTracker.Sevices.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace BugTracker.Areas.Identity.Pages.Account
 {
@@ -24,17 +28,21 @@ namespace BugTracker.Areas.Identity.Pages.Account
         private readonly UserManager<BTUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IBasicImageService _basicImageService;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<BTUser> userManager,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IBasicImageService basicImageService, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _basicImageService = basicImageService;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -46,6 +54,10 @@ namespace BugTracker.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name ="Custom Image")]
+            public IFormFile ImageFile { get; set; }
+
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -83,7 +95,20 @@ namespace BugTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BTUser { UserName = Input.Email, Email = Input.Email,FirstName = Input.FirstName,LastName = Input.LastName };
+                var user = new BTUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+
+                    AvatarImageData = (await _basicImageService.EncodeFileAsync(Input.ImageFile)) ??
+                                       await _basicImageService.EncodeFileAsync(_configuration["DefaultAvatarImage"]),
+                    AvatarContentType = Input.ImageFile is null ?
+                                        Path.GetExtension(_configuration["DefaultAvatarImage"]) :
+                                        _basicImageService.ContentType(Input.ImageFile)
+                };
+            
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

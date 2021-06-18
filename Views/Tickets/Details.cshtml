@@ -1,7 +1,6 @@
 ﻿@model BugTracker.Models.Ticket
 @using Microsoft.AspNetCore.Identity
 @using BugTracker.Sevices.Interfaces
-@inject IBTFileService BTFileService 
 @inject UserManager<BTUser> userManager
 
 @{
@@ -62,7 +61,7 @@
                 <h5 class="text- success mb-1">Assigned To:</h5>
                 <h1>
                     <span class="text-success float-right">@Html.DisplayFor(model => model.DeveloperUser.FullName)</span>
-                    <a asp-route-id="@Model.Id" asp-action="AssignTicket">Assign</a>
+                    <a asp-route-id="@Model.Id" asp-action="AssignTicket"><span>Assign</span></a>
                 </h1>
             </div>
         </div>
@@ -70,17 +69,24 @@
 </div>
 <!-- row -->
 <div class="row">
-    <div class="col-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Add Comment Someday :D</h4>
+    @*<div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Add Comment Someday :D</h4>
+                </div>
+                <div class="card-body">
+                    <div class="summernote"></div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="summernote"></div>
-            </div>
-        </div>
+        </div>*@
+    <div class="col">
+        <h3 class="text-center">ADD COMMENT</h3>
+        <form asp-action="Create" asp-controller="TicketComments" method="post">
+            <input type="hidden" value="@Model.Id" name="TicketId" />
+            <textarea name="Comment" rows="10" class="form-control"></textarea>
+            <button class="btn btn-dark btn-block btn-sm" type="submit">Submit</button>
+        </form>
     </div>
-
     <div class="col-6">
         <h1>Ticket Details</h1>
         <div>
@@ -131,7 +137,12 @@
                 </dd>
             </dl>
         </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="MyTickets">Back to List</a>
+        </div>
     </div>
+
 </div>
 
 
@@ -159,25 +170,36 @@
 
 
 
-    <div class="row">
-        <div class="col">
-            <h3 class="text-center">ADD COMMENT</h3>
-            <form asp-action="Create" asp-controller="TicketComments" method="post">
-                <input type="hidden" value="@Model.Id" name="TicketId" />
-                <textarea name="Comment" rows="10" class="form-control"></textarea>
-                <button class="btn btn-dark btn-block btn-sm" type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
+
+
+
+
+
 
 <hr />
-<div class="btn-sm btn-dark btn-block">@Model.Comments.Count Comment(s)</div>
-
 <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
-    <ul class="contacts">
-        @foreach (TicketComment comment in Model.Comments.OrderByDescending(c => c.Created))
-        {
-            <li class="active dz-chat-user">
+    
+        <div class="btn-sm btn-dark btn-block">@Model.Comments.Count Comment(s)</div>
+
+        <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
+            <ul class="contacts">
+                @foreach (TicketComment comment in Model.Comments.OrderByDescending(c => c.Created))
+                {
+                    <li class="active dz-chat-user">
+                        <div class="d-flex bd-highlight">
+                            <div class="img_cont">
+                                @*<img src="@_fileService.DecodeImage(User., blog.ContentType)" class="rounded-circle user_img" alt="" />*@                                
+                            </div>
+                            <div style="font-size:x-small;">@comment.Created.ToString("MM.dd.yyyy")</div>
+                            <div class="user_info">
+                                <span>@comment.User?.FullName</span>
+                                <p>@comment.Comment</p>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    @*<li class="active dz-chat-user">
                 <div class="d-flex bd-highlight">
                     <div class="img_cont">
                         <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="" />
@@ -189,18 +211,16 @@
                         <p>@comment.Comment</p>
                     </div>
                 </div>
-            </li>
+            </li>*@
 
-        }
-    </ul>
-</div>
-        
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="MyTickets">Back to List</a>
+                }
+            </ul>
         </div>
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
+
+    
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
