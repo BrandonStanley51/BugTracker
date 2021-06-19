@@ -114,9 +114,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    //CompanyId = new(),
-                    
-
+              
                     AvatarImageData = (await _basicImageService.EncodeFileAsync(Input.ImageFile)) ??
                                        await _basicImageService.EncodeFileAsync(_configuration["DefaultAvatarImage"]),
                     AvatarContentType = Input.ImageFile is null ?

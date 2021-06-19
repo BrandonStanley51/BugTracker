@@ -34,9 +34,7 @@ namespace BugTracker.Models
         //
         //
         public IFormFile AvatarFormFile { get; set; }
-        public string AvatarFileName { get; set; }
-        
-       
+        public string AvatarFileName { get; set; }  
         public byte[] AvatarImageData { get; set; }
 
         [Display(Name = "File Extension")]

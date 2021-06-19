@@ -21,31 +21,33 @@ namespace BugTracker.Controllers
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTProjectService _projectService;
         private readonly IBTTicketService _ticketService;
+        private readonly IBasicImageService _basicImageService;
 
         public HomeController(ILogger<HomeController> logger,
                               UserManager<BTUser> userManager,
                               IBTCompanyInfoService companyInfoService,
                               IBTProjectService projectService,
-                              IBTTicketService ticketService)
+                              IBTTicketService ticketService, IBasicImageService basicImageService)
         {
             _logger = logger;
             _userManager = userManager;
             _companyInfoService = companyInfoService;
             _projectService = projectService;
             _ticketService = ticketService;
+            _basicImageService = basicImageService;
         }
 
         [Authorize]
         public async Task<IActionResult> Dashboard()
         {
             int companyId = User.Identity.GetCompanyId().Value;
-
+            
             DashboardViewModel model = new()
             {
                 Company = await _companyInfoService.GetCompanyInfoByIdAsync(companyId),
                 Projects = await _projectService.GetAllProjectsByCompany(companyId),
                 Tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId),
-                Members = await _companyInfoService.GetAllMembersAsync(companyId)
+                Members = await _companyInfoService.GetAllMembersAsync(companyId),
             };
             return View(model);
         }        

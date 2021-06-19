@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Models;
+using BugTracker.Sevices.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,16 +15,19 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BTUser> _userManager;
         private readonly SignInManager<BTUser> _signInManager;
+        private readonly IBasicImageService _basicImageService;
 
         public IndexModel(
             UserManager<BTUser> userManager,
-            SignInManager<BTUser> signInManager)
+            SignInManager<BTUser> signInManager, IBasicImageService basicImageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _basicImageService = basicImageService;
         }
 
         public string Username { get; set; }
+        public string CurrentImage { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,6 +40,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Display Name")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             public string DisplayName { get; set; }
+            public string CurrentImage { get; set; }
+            public string NewImage { get; set; }
 
             [Phone]
             [Display(Name = "Phone number")]
@@ -48,6 +54,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
+            CurrentImage = _basicImageService.DecodeImage(user.AvatarImageData, user.AvatarFileName);
 
             Input = new InputModel
             {
@@ -102,11 +109,11 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                 hasChanged = true;
             }
 
-            //if (Input.NewImage is not null)
-            //{
-            //    user.ImageData = await _fileService.EncodeFileAsync(Input.NewImage);
-            //    hasChanged = true;
-            //}
+            if (Input.NewImage is not null)
+            {
+                user.AvatarImageData = await _basicImageService.EncodeFileAsync(Input.NewImage);
+                hasChanged = true;
+            }
 
             if (hasChanged)
             {
