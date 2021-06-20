@@ -22,9 +22,6 @@
                 @Html.DisplayNameFor(model => model.FileName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FileData)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FileContentType)
             </th>
             <th>
@@ -49,16 +46,13 @@
                 @Html.DisplayFor(modelItem => item.FileName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileData)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.FileContentType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ticket.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

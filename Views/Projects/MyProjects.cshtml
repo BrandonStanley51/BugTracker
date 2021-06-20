@@ -8,61 +8,66 @@
 
 
 <div class="container-fluid">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="example4" class="display" style="min-width: 845px">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Img File Name</th>
-                                <th>Img File Data</th>
-                                <th>Img Content Type</th>
-                                <th>Archived</th>
-                                <th>Company</th>
-                                <th>Project Priority</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
+    <div class="row">
+        <div class="col">
+            <div class="card mx-auto">
+                <div class="card-header">
+                    <h1>My Projects</h1>
+
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example4" class="display" style="min-width: 845px">
+                            <thead>
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ImageFileName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ImageFileData)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ImageContentType)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Archived)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
-                                    <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.ProjectPriority.Name)</span></td>
-                                    <td>
-                                        @if (User.IsInRole("Admin, ProjectManager"))
-                                        {
-                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-}
-                                        @if (User.IsInRole("Admin, ProjectManager"))
-                                        { 
-                                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                        }
-                                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Img File Name</th>
+                                    <th>Img File Data</th>
+                                    <th>Img Content Type</th>
+                                    <th>Archived</th>
+                                    <th>Company</th>
+                                    <th>Project Priority</th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ImageFileName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ImageFileData)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ImageContentType)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
+                                        <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.ProjectPriority.Name)</span></td>
+                                        <td>
+                                            @if (User.IsInRole("Admin, ProjectManager"))
+                                            {
+                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                            }
+                                            @if (User.IsInRole("Admin, ProjectManager"))
+                                            {
+                                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                            }
+                                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
