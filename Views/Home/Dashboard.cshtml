@@ -1,18 +1,43 @@
 ﻿@model BugTracker.Models.ViewModels.DashboardViewModel
-<div class="container-fluid">
-    <div class="row page-titles mx-0">
-        <div class="col-sm-6 p-md-0">
-            <div class="welcome-text">
-                <h1>@Model.Company.Name: Dashboard</h1>
+
+
+
+
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
+                <div class="card ml-2">
+
+
+                    <div class="row">
+
+                        <div class="col text-center">
+                            <h1 class="card-title" style="font-size: 30px;">@Model.Company.Name</h1>
+
+                        </div>
+
+
+                        <div class="col text-center" style="font-size: 20px;">
+                            <span>Welcome to the Dashboard!</span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-footer">
+                        <a class="btn btn-outline-warning btn-sm align-text-bottom" asp-action="ManageUserRoles" asp-controller="UserRoles">
+                            Manage User Roles
+                        </a>
+
+                        <a class="btn btn-outline-warning align-text-bottom pull-right" asp-action="Create" asp-controller="Invites">
+                            Company Invites
+                        </a>
+                    </div>
+                    </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xl-9 col-xxl-12">
-            <div class="row">
-
-                <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+                <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
                     <div class="card bg-success	overflow-hidden">
                         <div class="card-body pb-0 px-4 pt-4">
                             <div class="row">
@@ -27,7 +52,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+
+                <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
                     <div class="card bg-primary overflow-hidden">
                         <div class="card-body pb-0 px-4 pt-4">
                             <div class="row">
@@ -42,7 +68,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+
+                <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
                     <div class="card overflow-hidden">
                         <div class="card-body px-4 py-4">
                             <h5 class="mb-1">Total Tickets: 00</h5>
@@ -59,8 +86,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
-                    <div class="card overflow-hidden">
+
+                <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
+                    <div class="card overflow-hidden mr-2">
                         <div class="card-body pb-0 px-4 pt-4">
                             <div class="row">
                                 <div class="col">
@@ -76,102 +104,155 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-8 col-xxl-8 col-lg-12 col-md-12">
+            </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card ml-2">
+                    <h1>Projects</h1>
+                    <div class="widget-media">
+                        <ul class="timeline">
+                            @foreach (var item in Model.Projects)
+                            {
+                                <li>
+                                    <div class="timeline-panel">
+                                        <div class="media mr-2">
+                                            <img alt="image" width="50" src="images/avatar/1.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mb-1">Dr Sultads Send You</h5>
+                                            <small class="d-block">29 July 2021 - 02:26 PM</small>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                                <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <canvas id="lineChart_3Kk"></canvas>
+                    </div>
+                </div>
+            </div>
+                <div class="col-5">
                     <div class="card">
                         <div class="card-header border-0 pb-0">
                             <h4 class="card-title">Unassigned Ticket List/Current Ticket List</h4>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-responsive-sm mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:20px;">
-                                                <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
-                                                    <input type="checkbox" class="custom-control-input" id="checkAll" required="">
-                                                    <label class="custom-control-label" for="checkAll"></label>
-                                                </div>
-                                            </th>
-                                            <th><strong>STATUS.</strong></th>
-                                            <th><strong>NAME</strong></th>
-                                            <th><strong>DATE</strong></th>
-                                            <th><strong>STATUS</strong></th>
-                                            <th style="width:85px;"><strong>EDIT</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox check-lg mr-3">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheckBox2" required="">
-                                                    <label class="custom-control-label" for="customCheckBox2"></label>
-                                                </div>
-                                            </td>
-                                            <td><b>$542</b></td>
-                                            <td>Dr. Jackson</td>
-                                            <td>01 August 2021</td>
-                                            <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-success mr-1"></i>Successful</td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox check-lg mr-3">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheckBox3" required="">
-                                                    <label class="custom-control-label" for="customCheckBox3"></label>
-                                                </div>
-                                            </td>
-                                            <td><b>$2000</b></td>
-                                            <td>Dr. Jackson</td>
-                                            <td>01 August 2021</td>
-                                            <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-danger mr-1"></i>Canceled</td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox check-lg mr-3">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheckBox4" required="">
-                                                    <label class="custom-control-label" for="customCheckBox4"></label>
-                                                </div>
-                                            </td>
-                                            <td><b>$300</b></td>
-                                            <td>Dr. Jackson</td>
-                                            <td>01 August 2021</td>
-                                            <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-warning mr-1"></i>Pending</td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox check-lg mr-3">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheckBox5" required="">
-                                                    <label class="custom-control-label" for="customCheckBox5"></label>
-                                                </div>
-                                            </td>
-                                            <td><b>$2000</b></td>
-                                            <td>Dr. Jackson</td>
-                                            <td>01 August 2021</td>
-                                            <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-danger mr-1"></i>Canceled</td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="default-tab">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#home"><i class="la la-home mr-2"></i> Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#profile"><i class="la la-user mr-2"></i> Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#contact"><i class="la la-phone mr-2"></i> Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#message"><i class="la la-envelope mr-2"></i> Message</a>
+                                    </li>
+                                </ul>
+
+                                <div class="table-responsive">
+                                    <table class="table table-responsive-sm mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20px;">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="checkAll" required="">
+                                                        <label class="custom-control-label" for="checkAll"></label>
+                                                    </div>
+                                                </th>
+                                                <th><strong>STATUS.</strong></th>
+                                                <th><strong>NAME</strong></th>
+                                                <th><strong>DATE</strong></th>
+                                                <th><strong>STATUS</strong></th>
+                                                <th style="width:85px;"><strong>EDIT</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox2" required="">
+                                                        <label class="custom-control-label" for="customCheckBox2"></label>
+                                                    </div>
+                                                </td>
+                                                <td><b>$542</b></td>
+                                                <td>Dr. Jackson</td>
+                                                <td>01 August 2021</td>
+                                                <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-success mr-1"></i>Successful</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox3" required="">
+                                                        <label class="custom-control-label" for="customCheckBox3"></label>
+                                                    </div>
+                                                </td>
+                                                <td><b>$2000</b></td>
+                                                <td>Dr. Jackson</td>
+                                                <td>01 August 2021</td>
+                                                <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-danger mr-1"></i>Canceled</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox4" required="">
+                                                        <label class="custom-control-label" for="customCheckBox4"></label>
+                                                    </div>
+                                                </td>
+                                                <td><b>$300</b></td>
+                                                <td>Dr. Jackson</td>
+                                                <td>01 August 2021</td>
+                                                <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-warning mr-1"></i>Pending</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox5" required="">
+                                                        <label class="custom-control-label" for="customCheckBox5"></label>
+                                                    </div>
+                                                </td>
+                                                <td><b>$2000</b></td>
+                                                <td>Dr. Jackson</td>
+                                                <td>01 August 2021</td>
+                                                <td class="recent-stats d-flex align-items-center"><i class="fa fa-circle text-danger mr-1"></i>Canceled</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-xxl-4 col-lg-12 col-md-12">
-                    <div class="card">
+                <div class="col-xl-3 col-xxl-4 col-lg-12 col-md-12">
+                    <div class="card mr-2">
                         <div class="card-header border-0 pb-0">
                             <h4 class="card-title">Recent User Activity</h4>
                         </div>
@@ -216,97 +297,12 @@
                     </div>
                 </div>
 
+
             </div>
-        </div>
-        <div class="col-xl-3 col-xxl-4 col-lg-12 col-md-12">
-            <div class="card overflow-hidden">
-                <div class="card-header pb-0 border-0">
-                    <h4 class="card-title">Project DeadLine Counter</h4>
-                </div>
-                <div class="card-body">
-                    <div class="widget-media">
-                        <ul class="timeline">
-                            <li>
-                                <div class="timeline-panel">
-                                    <div class="media mr-2">
-                                        <img alt="image" width="50" src="images/avatar/1.jpg">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mb-1">Dr Sultads Send You</h5>
-                                        <small class="d-block">29 July 2021 - 02:26 PM</small>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="timeline-panel">
-                                    <div class="media mr-2 media-info">
-                                        KG
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mb-1">Resport created</h5>
-                                        <small class="d-block">29 July 2021 - 02:26 PM</small>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-info light sharp" data-toggle="dropdown">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="timeline-panel">
-                                    <div class="media mr-2 media-success">
-                                        <i class="fa fa-home"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mb-1">Reminder : Treatment</h5>
-                                        <small class="d-block">29 July 2021 - 02:26 PM</small>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <canvas id="lineChart_3Kk"></canvas>
-            </div>
-
-            <!-- <div class="col-lg-12 col-sm-12">
-                <div class="card bg-primary">
-                    <div class="card-header border-0 pb-0">
-                        <h4 class="card-title">Dual Line Chart</h4>
-                    </div>
-                    <div class="card-body">
-
-                    </div>
-                     <canvas id="lineChart_3Kk"></canvas>
-                </div>
-            </div> -->
-        </div>
-
     </div>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
