@@ -20,10 +20,8 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileContentType)
-            </th>
+            </th>            
+
             <th>
                 @Html.DisplayNameFor(model => model.Ticket)
             </th>
@@ -45,9 +43,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FileName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileContentType)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Ticket.Description)
             </td>

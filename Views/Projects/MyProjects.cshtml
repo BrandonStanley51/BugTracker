@@ -23,9 +23,6 @@
                                     <th>Description</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Img File Name</th>
-                                    <th>Img File Data</th>
-                                    <th>Img Content Type</th>
                                     <th>Archived</th>
                                     <th>Company</th>
                                     <th>Project Priority</th>
@@ -40,9 +37,6 @@
                                         <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                         <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
                                         <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.ImageFileName)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.ImageFileData)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.ImageContentType)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Archived)</td>
                                         <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
                                         <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.ProjectPriority.Name)</span></td>
@@ -52,7 +46,7 @@
                                                     <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                                 </button>
                                                 <div class="dropdown-menu mr-1">
-                                                    <a class="dropdown-item" asp-controller="Projects" asp-action="AssignUsers" asp-route-id="@item.Id">Assign Users</a>
+                                                    <a class="dropdown-item" asp-controller="Projects" asp-action="AssignUsers" asp-route-id="@item.Id">Assign Members</a>
                                                     <a class="dropdown-item" asp-controller="Projects" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                                     <a class="dropdown-item" asp-controller="Projects" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                                     <a class="dropdown-item" asp-controller="Projects" asp-action="Delete" asp-route-id="@item.Id">Delete</a>

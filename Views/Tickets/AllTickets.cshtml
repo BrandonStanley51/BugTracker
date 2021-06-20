@@ -17,8 +17,8 @@
                         <table id="example4" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
-                                    <th>Project</th>
                                     <th>Title</th>
+                                    <th>Project</th>
                                     <th>Description</th>
                                     <th>Ticket Priority</th>
                                     <th>Ticket Type</th>
@@ -34,8 +34,8 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                         <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
                                         <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>

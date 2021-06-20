@@ -131,7 +131,7 @@
                                                 <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                             </button>
                                             <div class="dropdown-menu mr-1">
-                                                <a class="dropdown-item" asp-controller="Projects" asp-action="AssignUsers" asp-route-id="@item.Id">Assign Users</a>
+                                                <a class="dropdown-item" asp-controller="Projects" asp-action="AssignUsers" asp-route-id="@item.Id">Assign Members</a>
                                                 <a class="dropdown-item" asp-controller="Projects" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                                 <a class="dropdown-item" asp-controller="Projects" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                                 <a class="dropdown-item" asp-controller="Projects" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -186,7 +186,7 @@
                                                             <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Users</a>
+                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Devs</a>
                                                             <a class="dropdown-item" asp-controller="Tickets" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                                             <a class="dropdown-item" asp-controller="Tickets" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                                             <a class="dropdown-item" asp-controller="Tickets" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -214,13 +214,12 @@
                                     <thead>
                                         <tr>
                                             <th>Title</th>
-                                            <th>Createad</th>
                                             <th>Project</th>
-                                            <th>Ticket Type</th>
+                                            <th>Createad</th>
                                             <th>Ticket Priority</th>
+                                            <th>Ticket Type</th>
                                             <th>Ticket Status</th>
                                             <th>Developer User</th>
-                                            <th>Owner User</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -229,19 +228,23 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                                 <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
+                                                <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.TicketStatus.Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
                                                 <td>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" asp-controller="Tickets" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Users</a>
-                                                        <a class="dropdown-item" asp-controller="Tickets" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                                        <a class="dropdown-item" asp-controller="Tickets" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                                        <a class="dropdown-item" asp-controller="Tickets" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                                            <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Devs</a>
+                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -254,50 +257,50 @@
                 </div>
             };
             @*<div class="col-xl-3 col-xxl-4 col-lg-12 col-md-12">
-            <div class="card mr-2">
-                <div class="card-header border-0 pb-0">
-                    <h4 class="card-title">Recent User Activity</h4>
-                </div>
-                <div class="card-body">
-                    <div id="DZ_W_TimeLine1" class="widget-timeline dz-scroll style-1" style="height:250px;">
-                        <ul class="timeline">
-                            <li>
-                                <div class="timeline-badge primary"></div>
-                                <a class="timeline-panel text-muted" href="#">
-                                    <span>10 minutes ago</span>
-                                    <h6 class="mb-0">Youtube, a video-sharing website <strong class="text-primary">$500</strong>.</h6>
-                                </a>
-                            </li>
-                            <li>
-                                <div class="timeline-badge info">
-                                </div>
-                                <a class="timeline-panel text-muted" href="#">
-                                    <span>20 minutes ago</span>
-                                    <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-                                    <p class="mb-0">Quisque a consequat ante Sit...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <div class="timeline-badge danger">
-                                </div>
-                                <a class="timeline-panel text-muted" href="#">
-                                    <span>30 minutes ago</span>
-                                    <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
-                                </a>
-                            </li>
-                            <li>
-                                <div class="timeline-badge success">
-                                </div>
-                                <a class="timeline-panel text-muted" href="#">
-                                    <span>15 minutes ago</span>
-                                    <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="card mr-2">
+                        <div class="card-header border-0 pb-0">
+                            <h4 class="card-title">Recent User Activity</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="DZ_W_TimeLine1" class="widget-timeline dz-scroll style-1" style="height:250px;">
+                                <ul class="timeline">
+                                    <li>
+                                        <div class="timeline-badge primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>10 minutes ago</span>
+                                            <h6 class="mb-0">Youtube, a video-sharing website <strong class="text-primary">$500</strong>.</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge info">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>20 minutes ago</span>
+                                            <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
+                                            <p class="mb-0">Quisque a consequat ante Sit...</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge danger">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>30 minutes ago</span>
+                                            <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge success">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>15 minutes ago</span>
+                                            <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>*@
+                </div>*@
 
 
         </div>

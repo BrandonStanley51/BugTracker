@@ -25,6 +25,7 @@ namespace BugTracker.Controllers
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTNotificationService _notificationService;
         private readonly IBasicImageService _basicImageService;
+
         
 
         public TicketsController(ApplicationDbContext context,
