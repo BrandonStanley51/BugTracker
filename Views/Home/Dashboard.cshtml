@@ -90,7 +90,7 @@
             </div>
 
             <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
-                <div class="card overflow-hidden">
+                <div class="card overflow-hidden mr-2">
                     <div class="card-body px-4 py-4">
                         <h5 class="mb-1">My Tickets: 0000</h5>
                         <div class="chart-point">
@@ -149,7 +149,7 @@
             @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
             {
                 <div class="col-8">
-                    <div class="card text-center">
+                    <div class="card text-center mr-2">
                         <h1 class="text-center">All Tickets</h1>
                         <hr />
                         <div class="card-body">
@@ -204,8 +204,8 @@
             }
             else if (User.IsInRole("Developer") || User.IsInRole("Submitter"))
             {
-                <div class="col-8">
-                    <div class="card text-center">
+                <div class="col-8 ">
+                    <div class="card text-center mr-2">
                         <h1 class="text-center">My Tickets</h1>
                         <hr />
                         <div class="card-body">
