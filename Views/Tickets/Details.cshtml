@@ -111,11 +111,9 @@
                                 <div class="col justify-content-center">
                                     <a type="button" class="btn btn-icon btn-outline-warning"asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
                                 </div>
-                                <a class="btn btn-outline-warning align-text-bottom pull-right" >
-                                    Company Invites
-                                </a>
+
                                 <div class="col justify-content-center">
-                                    <button type="button" class="btn btn-icon btn-outline-warning">View Ticket History</button>
+                                    <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
                                 </div>
                             </div>
                         </div>
