@@ -8,7 +8,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h5>Ticket ID and Title Details Created on xx/xx/xxxx</h5>
+<h1>Ticket:  <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Title) <span class="float-right mr-5">Created on: @Html.DisplayFor(model => model.Created)</span></span></h1>
 <hr />
 <div class="row">
     <div class="col">
