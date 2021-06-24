@@ -11,10 +11,10 @@
                 <div class="top">
                 </div>
                 <div class="card">
-                    <div class="header">
+                    <div class="card-header">
                         <p class="lead">@ViewData["Title"]</p>
                     </div>
-                    <div class="body">
+                    <div class="card-body">
                         @{ if (@Model.DisplayConfirmAccountLink)
                                         {
                             <p>
@@ -24,7 +24,7 @@
                                         else
                                         {
                             <p>
-                                Please check your email to confirm your account.
+                                Please check your email to confirm your account. You may close this window now.
                             </p> } }
                     </div>
                 </div>

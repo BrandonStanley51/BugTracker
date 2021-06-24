@@ -29,26 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card overflow-hidden">
-            <div class="card-body pb-0 px-4 pt-4">
 
-                <h5 class="text- success mb-1">Status</h5>
-                <h1>
-                    <span class="text-success float-right">@Html.DisplayFor(model => model.Members)</span>
-                </h1>
-                <h5>
-                    Members:
-                    @foreach (BTUser member in Model.Members)
-                    {
-                        
-                            @member.FullName
-                       
-                    }
-                </h5>
-            </div>
-        </div>
-    </div>
 
     <div class="col">
         <div class="card overflow-hidden mr-2">
@@ -64,64 +45,54 @@
 </div>
 <!-- row -->
 <div class="row">
+
+    <div class="col-6">
+        <div class="card overflow-hidden mr-2">
+            <div class="card-header">
+                <h1>Ticket:  <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Name)</span></h1>
+            </div>
+            <div class="card-body pb-0 px-4 pt-4">
+                <h3>Description:</h3>
+                @Html.DisplayFor(model => model.Description)
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                        <a asp-action="MyTickets">Back to List</a>
+                    </div>
+                    <div class="col justify-content-center">
+                        <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
+                    </div>
+
+                    <div class="col justify-content-center">
+                        <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="card overflow-hidden">
+            <div class="card-body pb-0 px-4 pt-4">
+
+               
+                <h5>
+                    Members:
+                    @foreach (BTUser member in Model.Members)
+                    {
+                        <br />
+                        @member.FullName
+
+                    }
+                </h5>
+
+            </div>
+        </div>
+    </div>
     
-    <div class="col-6">
-        <div class="card overflow-hidden mr-2">
-            <div class="card-header">
-                <h1>Ticket:  <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Name)</span></h1>
-            </div>
-            <div class="card-body pb-0 px-4 pt-4">
-                <h3>Description:</h3>
-                @Html.DisplayFor(model => model.Description)
-            </div>
-
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col">
-                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                        <a asp-action="MyTickets">Back to List</a>
-                    </div>
-                    <div class="col justify-content-center">
-                        <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
-                    </div>
-
-                    <div class="col justify-content-center">
-                        <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-6">
-        <div class="card overflow-hidden mr-2">
-            <div class="card-header">
-                <h1>Ticket:  <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Name)</span></h1>
-            </div>
-            <div class="card-body pb-0 px-4 pt-4">
-                <h3>Description:</h3>
-
-                @Html.DisplayFor(model => model.Description)
-
-            </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col">
-                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                        <a asp-action="MyTickets">Back to List</a>
-                    </div>
-                    <div class="col justify-content-center">
-                        <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
-                    </div>
-
-                    <div class="col justify-content-center">
-                        <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 

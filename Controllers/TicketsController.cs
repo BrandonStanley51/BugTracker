@@ -12,6 +12,7 @@ using BugTracker.Sevices.Interfaces;
 using BugTracker.Extensions;
 using BugTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -26,7 +27,7 @@ namespace BugTracker.Controllers
         private readonly IBTNotificationService _notificationService;
         private readonly IBasicImageService _basicImageService;
 
-        
+
 
         public TicketsController(ApplicationDbContext context,
                                     UserManager<BTUser> userManager,
@@ -34,7 +35,8 @@ namespace BugTracker.Controllers
                                     IBTTicketService ticketService,
                                     IBTHistoryService historyService,
                                     IBTCompanyInfoService companyInfoService,
-                                    IBTNotificationService notificationService, IBasicImageService basicImageService)
+                                    IBTNotificationService notificationService,
+                                    IBasicImageService basicImageService)
         {
             _context = context;
             _userManager = userManager;
@@ -44,33 +46,88 @@ namespace BugTracker.Controllers
             _companyInfoService = companyInfoService;
             _notificationService = notificationService;
             _basicImageService = basicImageService;
-            
+
         }
+
+        //Attachment
+        public IActionResult ShowFile(int id)
+        {
+            TicketAttachment ticketAttachment = _context.TicketAttachment.Find(id);
+            string fileName = ticketAttachment.FileName;
+            byte[] fileData = ticketAttachment.FileData;
+            string ext = Path.GetExtension(fileName).Replace(".", "");
+
+            Response.Headers.Add("Content-Disposition", $"inline; filename={fileName}");
+            return File(fileData, $"application/{ext}");
+        }
+
+
+
 
         // GET: Tickets
         public async Task<IActionResult> MyTickets()
         {
-            var applicationDbContext = _context.Ticket.Include(t => t.DeveloperUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType).Include(t => t.TicketPriority);
-            return View(await applicationDbContext.ToListAsync());
+            var companyId = User.Identity.GetCompanyId().Value;
+
+            var userId = _userManager.GetUserId(User);
+            var devTickets = await _ticketService.GetAllTicketsByRoleAsync("Developer", userId);
+            var subTickets = await _ticketService.GetAllTicketsByRoleAsync("Submitter", userId);
+            
+            var unassignedTickets = await _ticketService.GetAllTicketsByStatusAsync(companyId, "Unassigned");
+
+            if (User.IsInRole("Developer"))
+            {
+                return View(devTickets);
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+            return View(subTickets);
+
+            }else if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+            {
+                return View(unassignedTickets);
+            }
+            return View();
+  
         }
 
-        // public Task<IActionResult> MyTickets()
-        //{
 
-        // }
 
         [Authorize(Roles = "Admin, ProjectManager")]
         public async Task<IActionResult> AllTickets()
         {
-            var applicationDbContext = await _context.Ticket
-                                            .Include(t => t.DeveloperUser)
-                                            .Include(t => t.OwnerUser)
-                                            .Include(t => t.Project)
-                                            .Include(t => t.Comments)
-                                            .Include(t => t.TicketPriority)
-                                            .Include(t => t.TicketStatus)
-                                            .Include(t => t.TicketType).ToListAsync();
-            return View(applicationDbContext);
+
+            var companyId = User.Identity.GetCompanyId().Value;
+            var userId = _userManager.GetUserId(User);
+
+            var allTickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId);
+          
+            var pmTickets = await _ticketService.GetAllPMTicketsAsync(userId);
+            
+
+            if (User.IsInRole("Admin"))
+            {
+                return View(allTickets);
+            }
+            else if (User.IsInRole("ProjectManager"))
+            {
+                return View(pmTickets);
+
+            }
+
+            return View();
+
+
+
+            //var applicationDbContext = await _context.Ticket
+            //                                .Include(t => t.DeveloperUser)
+            //                                .Include(t => t.OwnerUser)
+            //                                .Include(t => t.Project)
+            //                                .Include(t => t.Comments)
+            //                                .Include(t => t.TicketPriority)
+            //                                .Include(t => t.TicketStatus)
+            //                                .Include(t => t.TicketType).ToListAsync();
+            //return View(applicationDbContext);
         }
 
         // GET: Tickets/Details/5
@@ -80,7 +137,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            
+
             var ticket = await _context.Ticket
                 .Include(t => t.DeveloperUser)
                 .Include(t => t.Project)
@@ -90,7 +147,7 @@ namespace BugTracker.Controllers
                 .Include(t => t.TicketType)
                 .Include(t => t.Comments)
                 .Include(t => t.Attachments)
-                .Include(t => t.History).ThenInclude(t=>t.User)
+                .Include(t => t.History).ThenInclude(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -133,7 +190,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId")] Ticket ticket)
@@ -275,19 +332,19 @@ namespace BugTracker.Controllers
 
                     }
                     //Alert Dev if ticket is Assigned
-                    if(ticket.DeveloperUserId != null)
+                    if (ticket.DeveloperUserId != null)
                     {
                         notification = new()
                         {
                             TicketId = ticket.Id,
-                            Title = $"Ticket assigned to you has been modified" ,
+                            Title = $"Ticket assigned to you has been modified",
                             Message = $"Ticket: [{ticket.Id}]:{ticket.Title} updated by {btUser?.FullName}",
                             Created = DateTimeOffset.Now,
                             SenderId = btUser?.Id,
                             RecipientId = ticket.DeveloperUserId
                         };
                         await _notificationService.SaveNotificationAsync(notification);
-                        
+
                     }
                 }
                 catch (DbUpdateConcurrencyException)

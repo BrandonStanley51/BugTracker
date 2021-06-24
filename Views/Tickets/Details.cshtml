@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div class="col justify-content-center">
-                                    <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
+                                    <a asp-controller="TicketHistories" asp-action="Details" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
                                 </div>
                             </div>
                         </div>
@@ -167,11 +167,8 @@
                     <div class="col-2">
                         <div class="card">
                             <div class="file">
-                                <a href="javascript:void(0);">
+                                <a asp-action="ShowFile" asp-controller="Tickets" asp-route-Id="@item.Id">
                                     <div class="hover">
-                                        <button type="button" class="btn btn-icon btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
                                     </div>
                                     <div class="icon">
                                         <img src="@BTFileService.GetFileIcon(item.FileName)" style="height:60px;width:60px" />
@@ -181,6 +178,9 @@
                                         <small>Size: @BTFileService.FormatFileSize(item.FileData.Length) <span class="date text-muted">@item.Created.ToString("MMM dd, yyyy")</span></small>
                                     </div>
                                 </a>
+                                        <a type="button" asp-controller="TicketAttachments" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-icon btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
                             </div>
                         </div>
                     </div>}

@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterByInviteModel
 @{ Layout = "_LoginLayout";
-                ViewData["Title"] = "RegisterByInviteModel"; }
+    ViewData["Title"] = "RegisterByInviteModel"; }
 
 <div id="wrapper">
     <div class="vertical-align-wrap">
@@ -10,10 +10,10 @@
                 <div class="top">
                 </div>
                 <div class="card">
-                    <div class="header">
+                    <div class="card-header">
                         <p class="lead">Create an account</p>
                     </div>
-                    <div class="body">
+                    <div class="card-body">
                         <form class="form-auth-small" method="post">
                             <input hidden asp-for="Input.CompanyId" />
                             <input hidden asp-for="Input.ProjectId" />

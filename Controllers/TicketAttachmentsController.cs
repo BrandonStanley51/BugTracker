@@ -80,7 +80,7 @@ namespace BugTracker.Controllers
 
                 _context.Add(ticketAttachment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));                
+                return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
                 //return RedirectToAction("Details", new { id = viewModel.Ticket.Id });
             }
             ViewData["TicketId"] = new SelectList(_context.Ticket, "Id", "Description", ticketAttachment.TicketId);
@@ -171,7 +171,8 @@ namespace BugTracker.Controllers
             var ticketAttachment = await _context.TicketAttachment.FindAsync(id);
             _context.TicketAttachment.Remove(ticketAttachment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Tickets", new{id= ticketAttachment.TicketId});
+
         }
 
         private bool TicketAttachmentExists(int id)
