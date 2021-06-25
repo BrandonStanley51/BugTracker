@@ -9,14 +9,13 @@
         <div class="col-5">
             <div class="card mx-auto">
                 <div class="card-header">
-                    <h1>Create</h1>
-                    <h4>Invite</h4>
+                    <h1><span class="text-success">Create Invite</span></h1>                    
                 </div>
                     <form asp-controller="Invites" asp-action="Create">
                 <div class="card-body">
                         <div class="row row-xs align-items-center mg-b-20">
                             <div class="col-md-4">
-                                <label class="mg-b-0">Email</label>
+                                <label class="mg-b-0 text-success">Email</label>
                             </div>
                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <input type="email" asp-for="Email" class="form-control" placeholder="Enter email">
@@ -24,7 +23,7 @@
                         </div>
                         <div class="row row-xs align-items-center mg-b-20">
                             <div class="col-md-4">
-                                <label class="mg-b-0">Firstname</label>
+                                <label class="mg-b-0 text-success">Firstname</label>
                             </div>
                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <input type="text" asp-for="FirstName" class="form-control" placeholder="Enter first name">
@@ -32,7 +31,7 @@
                         </div>
                         <div class="row row-xs align-items-center mg-b-20">
                             <div class="col-md-4">
-                                <label class="mg-b-0">Lastname</label>
+                                <label class="mg-b-0 text-success">Lastname</label>
                             </div>
                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <input type="text" asp-for="LastName" class="form-control" placeholder="Enter last name">
@@ -40,7 +39,7 @@
                         </div>
                         <div class="row row-xs align-items-center mg-b-20">
                             <div class="col-md-4">
-                                <label class="mg-b-0">Select Project</label>
+                                <label class="mg-b-0 text-success">Select Project</label>
                             </div>
                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <select class="form-control" asp-for="ProjectId" asp-items="Model.ProjectsList">
@@ -50,7 +49,7 @@
                         </div>
                         <div class="row row-xs align-items-center mg-b-20">
                             <div class="col-md-4">
-                                <label class="mg-b-0">Message</label>
+                                <label class="mg-b-0 text-success">Message</label>
                             </div>
                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <textarea class="form-control" asp-for="Message" multiple="multiple" style="width:375px;"></textarea>
@@ -60,9 +59,8 @@
                     <div class="card-footer">
                         <div class="form-group row justify-content-end mb-0">
                             <div class="col-md-8 pl-md-2">
-                                <input type="submit" class="btn ripple btn-primary pd-x-30 mg-r-5" value="SendInvite" />
-                                <button class="btn ripple btn-secondary pd-x-30">Cancel</button>
-                                <a asp-action="Index">Back to List</a>
+                                <input type="submit" class="btn ripple btn-outline-warning pd-x-30 mg-r-5" value="SendInvite" />
+                                
                             </div>
                             <div>
                             </div>

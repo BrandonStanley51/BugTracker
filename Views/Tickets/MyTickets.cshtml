@@ -9,25 +9,33 @@
         <div class="col">
             <div class="card mx-auto">
                 <div class="card-header">
-                    <h1>My Tickets</h1>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+            {
+                    <h1><span class="text-success">Unassigned Tickets</span></h1>
+            }else if (User.IsInRole("Developer") || User.IsInRole("Submitter"))
+                        {
+                <h1><span class="text-success">My Tickets</span></h1>
+                    }
 
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example4" class="display" style="min-width: 845px">
-                            <thead>
+                            <thead class="text-success">
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Project</th>
-                                    <th>Description</th>
-                                    <th>Ticket Priority</th>
-                                    <th>Ticket Type</th>
-                                    <th>Ticket Status</th>
-                                    <th>Createad</th>
-                                    <th>Developer User</th>
-                                    <th>Owner User</th>
-                                    <th>Archived</th>
+                                    
+                                    <th><span class="text-success">Title</span></th>
+                                    <th><span class="text-success">Project</span></th>
+                                    <th><span class="text-success">Description</span></th>
+                                    <th><span class="text-success">Ticket Priority</span></th>
+                                    <th><span class="text-success">Ticket Type</span></th>
+                                    <th><span class="text-success">Ticket Status</span></th>
+                                    <th><span class="text-success">Createad</span></th>
+                                    <th><span class="text-success">Developer User</span></th>
+                                    <th><span class="text-success">Owner User</span></th>
+                                    <th><span class="text-success">Archived</span></th>
                                     <th></th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>

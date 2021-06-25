@@ -9,7 +9,7 @@
         <div class="col-5">
             <div class="card mx-auto">
                 <div class="card-header">
-                    <h1>Edit Ticket</h1>
+                    <h1><span class="text-success">Edit Ticket</span></h1>
 
                 </div>
                     <form asp-action="Edit">
@@ -17,64 +17,64 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="Id" />
                         <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
+                            <label asp-for="Title" class="control-label text-success"></label>
                             <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
+                            <label asp-for="Description" class="control-label text-success"></label>
                             <input asp-for="Description" class="form-control" />
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Updated" class="control-label"></label>
+                            <label asp-for="Updated" class="control-label text-success"></label>
                             <input asp-for="Updated" class="form-control" />
                             <span asp-validation-for="Updated" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check">
-                            <label class="form-check-label">
+                            <label class="form-check-label text-success">
                                 <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
                             </label>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ArchivedData" class="control-label"></label>
+                            <label asp-for="ArchivedData" class="control-label text-success"></label>
                             <input asp-for="ArchivedData" class="form-control" />
                             <span asp-validation-for="ArchivedData" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ProjectId" class="control-label"></label>
+                            <label asp-for="ProjectId" class="control-label text-success"></label>
                             <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
                             <span asp-validation-for="ProjectId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TicketTypeId" class="control-label"></label>
+                            <label asp-for="TicketTypeId" class="control-label text-success"></label>
                             <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId"></select>
                             <span asp-validation-for="TicketTypeId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TicketPriorityId" class="control-label"></label>
+                            <label asp-for="TicketPriorityId" class="control-label text-success"></label>
                             <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId"></select>
                             <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TicketStatusId" class="control-label"></label>
+                            <label asp-for="TicketStatusId" class="control-label text-success"></label>
                             <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
                             <span asp-validation-for="TicketStatusId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="OwnerUserId" class="control-label"></label>
+                            <label asp-for="OwnerUserId" class="control-label text-success"></label>
                             <select asp-for="OwnerUserId" class="form-control" asp-items="ViewBag.OwnerUserId"></select>
                             <span asp-validation-for="OwnerUserId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="DeveloperUserId" class="control-label"></label>
+                            <label asp-for="DeveloperUserId" class="control-label text-success"></label>
                             <select asp-for="DeveloperUserId" class="form-control" asp-items="ViewBag.DeveloperUserId"></select>
                             <span asp-validation-for="DeveloperUserId" class="text-danger"></span>
                         </div>
                 </div>
                 <div class="card-footer">
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <input type="submit" value="Save" class="btn btn-outline-warning" />
                         </div>
                     <div>
                         <a asp-action="MyTickets">Back to List</a>

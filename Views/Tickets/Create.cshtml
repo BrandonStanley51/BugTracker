@@ -11,20 +11,19 @@
         <div class="col-5">
             <div class="card mx-auto">
                 <div class="card-header">
-                    <h1>Create</h1>
-                    <h4>Ticket</h4>
+                    <h1><span class="text-success">Create Ticket</span></h1>
                 </div>
                 <div class="card-body">
 
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
+                            <label asp-for="Title" class="control-label text-success"></label>
                             <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
+                            <label asp-for="Description" class="control-label text-success"></label>
                             <input asp-for="Description" class="form-control" />
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
@@ -49,19 +48,19 @@
                                 <span asp-validation-for="ArchivedData" class="text-danger"></span>
                             </div>*@
                         <div class="form-group">
-                            <label asp-for="ProjectId" class="control-label"></label>
+                            <label asp-for="ProjectId" class="control-label text-success"></label>
                             <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId">
                                 <option>Select a Project</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TicketTypeId" class="control-label"></label>
+                            <label asp-for="TicketTypeId" class="control-label text-success"></label>
                             <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId">
                                 <option>Select a Type</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TicketPriorityId" class="control-label"></label>
+                            <label asp-for="TicketPriorityId" class="control-label text-success"></label>
                             <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId">
                                 <option>Select a Priority</option>
                             </select>
@@ -84,7 +83,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <input asp-controller="Tickets" asp-action="Create" type="submit" value="Create" class="btn btn-primary" />
+                        <input asp-controller="Tickets" asp-action="Create" type="submit" value="Create" class="btn btn-outline-warning" />
                     </div>
                     <div>
                         <a asp-action="MyTickets">Back to List</a>

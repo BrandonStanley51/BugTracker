@@ -7,7 +7,7 @@
             {
 <div class="card col-5" style="margin:2px">
     <div class="card-body">
-        <h2 class="m-t-0 h3"><b>Assign Roles to @viewModel.BTUser.FullName</b></h2>
+        <h2 class="m-t-0 h3"><b><span class="text-success">Assign Roles to @viewModel.BTUser.FullName</span></b></h2>
         <p class="text-muted font-13 m-b-30">
             This form displays the current roles assigned to the user: @viewModel.BTUser.FullName. Use the dropdown to select the roles that this user should be assigned. Once roles are selected, click "Assign Roles" to submit the form.
         </p>
@@ -17,15 +17,14 @@
             <input type="hidden" asp-for="@viewModel.BTUser.Id">
             <div class="col-12">
                 <div class="form-group">
-                    <label asp-for="@viewModel.Roles" class="control-label">Roles for @viewModel.BTUser.FullName</label>
+                    <label asp-for="@viewModel.Roles" class="control-label text-success">Roles for @viewModel.BTUser.FullName</label>
                     <select asp-for="@viewModel.SelectedRoles" class="form-control" asp-items="@viewModel.Roles" multiple="multiple"></select>
                 </div>
             </div>
             <hr />
             <div class="col-12">
                 <div class="form-group pull-right">
-                    <input type="submit" value="Assign Roles" class="btn btn-info" />
-                    <a class="btn btn-info" asp-controller="Users" asp-action="Index">Cancel</a>
+                    <input type="submit" value="Assign Roles" class="btn btn-outline-warning" />                    
                 </div>
             </div>
 
