@@ -1,5 +1,6 @@
 ﻿@model BugTracker.Models.Project
-
+@using BugTracker.Sevices.Interfaces
+@inject IBTProjectService BtProjectService
 @{
     ViewData["Title"] = "Details";
 }
@@ -36,9 +37,11 @@
             <div class="card-body pb-0 px-4 pt-4">
 
                 <h5 class="text- success mb-1">Assigned To:</h5>
-                <h1>
-                    <a asp-route-id="@Model.Id" asp-action="AssignTicket"><span>Assign</span></a>
-                </h1>
+                <div class="col justify-content-center">
+                    
+                    @*<span class="text-success float-right">@BtProjectService.GetProjectManagerAsync())</span>*@
+                    <a type="button" class="btn btn-icon btn-outline-warning" asp-route-id="@Model.Id" asp-action="AssignPM">Assign Project Manager</a>
+                </div>
             </div>
         </div>
     </div>
@@ -60,14 +63,14 @@
                 <div class="row">
                     <div class="col">
                         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                        <a asp-action="MyTickets">Back to List</a>
-                    </div>
-                    <div class="col justify-content-center">
-                        <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
+                        <a asp-controller="Tickets" asp-action="Details" asp-route-id="@Model.Id">Back to List</a>
                     </div>
 
                     <div class="col justify-content-center">
                         <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
+                    </div>
+                    <div class="col justify-content-center">
+                        <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Details" asp-controller="Tickets" asp-route-id="@Model.Id">View Ticket</a>
                     </div>
                 </div>
             </div>
@@ -78,7 +81,8 @@
         <div class="card overflow-hidden">
             <div class="card-body pb-0 px-4 pt-4">
 
-               
+
+
                 <h5>
                     Members:
                     @foreach (BTUser member in Model.Members)

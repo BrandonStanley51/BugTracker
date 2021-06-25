@@ -214,6 +214,65 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+
+
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, ProjectManager")]
+        public async Task<IActionResult> AssignPM(int? id)
+        {
+            PMViewModel model = new();
+            int companyId = User.Identity.GetCompanyId().Value;
+            var projects = (await _projectService.GetAllProjectsByCompany(companyId));
+            Project project = projects.FirstOrDefault(p => p.Id == id);
+
+            model.Project = project;
+            List<BTUser> projectManagers = await _infoService.GetMembersInRoleAsync(Roles.ProjectManager.ToString(), companyId);
+            //List<BTUser> submitters = await _infoService.GetMembersInRoleAsync(Roles.Submitter.ToString(), companyId);
+
+            List<BTUser> users = projectManagers.ToList();
+           // List<BTUser> users = developers.Concat(submitters).ToList();
+            List<string> members = project.Members.Select(m => m.Id).ToList();
+            //List<BTUser> members = project.Members.ToList();
+            model.Users = new SelectList(users, "Id", "FullName", members);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ProjectManager")]
+        public async Task<IActionResult> AssignPM(PMViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.SelectedUser != null)
+                {
+
+                    List<string> memberIds = (await _projectService.GetMembersWithoutPMAsync(model.Project.Id))
+                                                                   .Select(m => m.Id).ToList();
+
+                    foreach (string id in memberIds)
+                    {
+                        await _projectService.RemoveUserFromProjectAsync(id, model.Project.Id);
+                    }
+                    foreach (string id in memberIds)
+                    {
+                        await _projectService.AddUserToProjectAsync(id, model.Project.Id);
+                    }
+
+                    return RedirectToAction("Details", "Projects", new { model.Project.Id });
+                }
+                else
+                {
+                    //error message
+                }
+            }
+            return View(model);
+        }
+
+
+
         [Authorize(Roles = "Admin, ProjectManager")]
         public async Task<IActionResult> AllProjects()
         {

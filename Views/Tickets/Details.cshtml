@@ -108,12 +108,10 @@
                                     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
                                     <a asp-action="MyTickets">Back to List</a>
                                 </div>
-                                <div class="col justify-content-center">
-                                    <a type="button" class="btn btn-icon btn-outline-warning"asp-action="Index" asp-controller="TicketAttachments" asp-route-id="@Model.Id">View All Attachments</a>
-                                </div>
+
 
                                 <div class="col justify-content-center">
-                                    <a asp-controller="TicketHistories" asp-action="Details" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
+                                    <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
                                 </div>
                             </div>
                         </div>
