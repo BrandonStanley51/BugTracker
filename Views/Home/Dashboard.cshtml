@@ -13,13 +13,13 @@
                     <div class="row">
 
                         <div class="col text-center">
-                            <h1 class="card-title" style="font-size: 30px;">@Model.Company.Name</h1>
+                            <h1 class="card-title" style="font-size: 30px;"><span class="text-success">@Model.Company.Name</span></h1>
 
                         </div>
 
 
                         <div class="col text-center" style="font-size: 20px;">
-                            <span>Welcome to the Dashboard!</span>
+                            <span class="text-success">Welcome to the Dashboard!</span>
                         </div>
 
 
@@ -42,7 +42,7 @@
                     <div class="card-body pb-0 px-4 pt-4">
                         <div class="row">
                             <div class="col">
-                                <h5 class="text- success mb-1">Total Members:</h5>
+                                <h5 class="mb-1"><span class="text-success">Total Members:</span></h5>
                                 <h1>
                                     <span class="text-success float-right">@Model.Company.Members.Count</span>
                                 </h1>
@@ -56,7 +56,7 @@
                     <div class="card-body pb-0 px-4 pt-4">
                         <div class="row">
                             <div class="col">
-                                <h5 class="text- success mb-1">Total Projects:</h5>
+                                <h5 class="mb-1"><span class="text-success">Total Projects:</span></h5>
                                 <h1>
                                     <span class="text-success float-right">@Model.Company.Projects.Count</span>
                                 </h1>
@@ -73,7 +73,7 @@
                     <div class="card-body pb-0 px-4 pt-4">
                         <div class="row">
                             <div class="col">
-                                <h5 class="text- success mb-1">All Tickets:</h5>
+                                <h5 class="mb-1"><span class="text-success">All Tickets:</span></h5>
                                 <h1>
                                     <span class="text-success float-right">@Model.Tickets.Count</span>
                                 </h1>
@@ -92,7 +92,7 @@
                     <div class="card-body pb-0 px-4 pt-4">
                         <div class="row">
                             <div class="col">
-                                <h5 class="text- success mb-1">My Tickets:</h5>
+                                <h5 class="mb-1"><span class="text-success">Tickets:</span></h5>
                                 <h1>
                                     <span class="text-success float-right">@Model.DevTickets.Count</span>
                                 </h1>
@@ -109,7 +109,7 @@
 
             <div class="col-4">
                 <div class="card ml-2">
-                    <h1 class="text-center">Projects</h1>
+                    <h1 class="text-center"><span class="text-success">Projects</span></h1>
                     <hr />
                     <div class="widget-media">
                         <ul class="timeline">
@@ -118,7 +118,7 @@
                                 <li>
                                     <div class="timeline-panel mr-1">
                                         <div class="media-body">
-                                            <h4 class="mb-1">@Html.DisplayFor(modelItem => item.Name)</h4>
+                                            <h4 class="mb-1"><span class="text-muted">@Html.DisplayFor(modelItem => item.Name)</span></h4>
                                             <h5 class="d-block"><span class="text-primary">END DATE: @Html.DisplayFor(modelItem => item.EndDate)</span></h5>
                                         </div>
                                         <div class="dropdown">
@@ -145,21 +145,21 @@
             {
                 <div class="col-8">
                     <div class="card text-center mr-2">
-                        <h1 class="text-center">Unassigned Tickets</h1>
+                        <h1 class="text-center"><span class="text-success">Unassigned Tickets</span></h1>
                         <hr />
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="example4" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>Title</th>
-                                            <th>Createad</th>
-                                            <th>Project</th>
-                                            <th>Ticket Type</th>
-                                            <th>Ticket Priority</th>
-                                            <th>Ticket Status</th>
-                                            <th>Developer User</th>
-                                            <th>Owner User</th>
+                                            <th><span class="text-success">Title</span></th>
+                                            <th><span class="text-success">Createad</span></th>
+                                            <th><span class="text-success">Project</span></th>
+                                            <th><span class="text-success">Ticket Type</span></th>
+                                            <th><span class="text-success">Ticket Priority</span></th>
+                                            <th><span class="text-success">Ticket Status</span></th>
+                                            <th><span class="text-success">Developer User</span></th>
+                                            <th><span class="text-success">Owner User</span></th>
                                             <th></th>
                                         </tr>
                                     </thead>

@@ -5,14 +5,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Project: <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Name) <span class="float-right mr-5">Created on: @Html.DisplayFor(model => model.StartDate)</span></span></h1>
+<h1><span class="text-success">Project Details</span></h1>
 <hr />
 <div class="row">
     <div class="col">
         <div class="card overflow-hidden ml-2">
             <div class="card-body pb-0 px-4 pt-4">
 
-                <h5 class="text- success mb-1">End Date:</h5>
+                <h3 class="mb-1"><span class="text-success">End Date:</span></h3>
                 <h1>
                     <span class="text-warning"><small>@Html.DisplayFor(model => model.EndDate)</small></span>
                 </h1>
@@ -23,9 +23,9 @@
         <div class="card overflow-hidden">
             <div class="card-body pb-0 px-4 pt-4">
 
-                <h5 class="text- success mb-1">Priority:</h5>
+                <h3 class="text- success mb-1"><span class="text-success">Priority:</span></h3>
                 <h1>
-                    <span class="text-success float-right">@Html.DisplayFor(model => model.ProjectPriority.Name)</span>
+                    <span class="text-warning float-right">@Html.DisplayFor(model => model.ProjectPriority.Name)</span>
                 </h1>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="card overflow-hidden mr-2">
             <div class="card-body pb-0 px-4 pt-4">
 
-                <h5 class="text- success mb-1">Assigned To:</h5>
+                <h3 class="mb-1"><span class="text-success">Assigned To:</span></h3>
                 <div class="col justify-content-center">
                     
                     @*<span class="text-success float-right">@BtProjectService.GetProjectManagerAsync())</span>*@
@@ -50,45 +50,49 @@
 <div class="row">
 
     <div class="col-6">
-        <div class="card overflow-hidden mr-2">
+        <div class="card overflow-hidden ml-2">
             <div class="card-header">
-                <h1>Ticket:  <br /><span style="font-size:22px;">@Html.DisplayFor(model => model.Name)</span></h1>
+                <h1><span class="text-success">Project:  </span><br /><span class="text-success" style="font-size:22px;">@Html.DisplayFor(model => model.Name)</span></h1>
             </div>
             <div class="card-body pb-0 px-4 pt-4">
-                <h3>Description:</h3>
+                <h3><span class="text-success">Description:</span></h3>
                 @Html.DisplayFor(model => model.Description)
             </div>
 
             <div class="card-footer">
-                <div class="row">
-                    <div class="col">
-                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                        <a asp-controller="Tickets" asp-action="Details" asp-route-id="@Model.Id">Back to List</a>
+                <div class="row justify-content-between">
+                    <div class="flex-column justify-content-between">
+                        <a asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">Edit Project</a>
                     </div>
 
-                    <div class="col justify-content-center">
+                    <div class="flex-column justify-content-between">
+                        <a asp-controller="Projects" asp-action="MyProjects" type="button" class="btn btn-icon btn-outline-warning">BACK to My Projects</a>
+                    </div>
+
+                    @*<div class="flex-column justify-content-between">
                         <a asp-controller="TicketHistories" asp-action="Details" asp-route-id="@Model.Id" type="button" class="btn btn-icon btn-outline-warning">View Ticket History</a>
                     </div>
-                    <div class="col justify-content-center">
+
+                    <div class="flex-column justify-content-between">
                         <a type="button" class="btn btn-icon btn-outline-warning" asp-action="Details" asp-controller="Tickets" asp-route-id="@Model.Id">View Ticket</a>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>
 
     </div>
     <div class="col">
-        <div class="card overflow-hidden">
+        <div class="card overflow-hidden mr-2">
             <div class="card-body pb-0 px-4 pt-4">
 
 
 
                 <h5>
-                    Members:
+                    <span class="text-success">Members:</span>
                     @foreach (BTUser member in Model.Members)
                     {
                         <br />
-                        @member.FullName
+                        <span class="text-muted">@member.FullName</span>
 
                     }
                 </h5>
@@ -120,7 +124,7 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header justify-content-around">
-            <h4 class="card-title">Project Tickets</h4>
+            <h4 class="card-title"><span class="text-success">Project Tickets</span></h4>
             <a class="nav-link nav-item btn-outline-warning btn" asp-controller="Tickets" asp-action="Create">Create New</a>
 
         </div>
@@ -129,18 +133,18 @@
                 <table id="example4" class="display" style="min-width: 845px">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                            <th>Archived</th>
-                            <th>ArchivedData</th>
-                            <th>Project</th>
-                            <th>TicketType</th>
-                            <th>TicketPriority</th>
-                            <th>TicketStatus</th>
-                            <th>DeveloperUser</th>
-                            <th>OwnerUser</th>
+                            <th><span class="text-success">Title</span></th>
+                            <th><span class="text-success">Description</span></th>
+                            <th><span class="text-success">Created</span></th>
+                            <th><span class="text-success">Updated</span></th>
+                            <th><span class="text-success">Archived</span></th>
+                            <th><span class="text-success">ArchivedData</span></th>
+                            <th><span class="text-success">Project</span></th>
+                            <th><span class="text-success">TicketType</span></th>
+                            <th><span class="text-success">TicketPriority</span></th>
+                            <th><span class="text-success">TicketStatus</span></th>
+                            <th><span class="text-success">DeveloperUser</span></th>
+                            <th><span class="text-success">OwnerUser</span></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -161,9 +165,17 @@
                                 <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-controller="Tickets" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
+                                            <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
+                                        </button>
+                                        <div class="dropdown-menu mr-1">
+                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="AssignTicket" asp-route-id="@item.Id">Assign Devs</a>
+                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-controller="Tickets" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
