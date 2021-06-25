@@ -92,10 +92,20 @@
                     <div class="card-body pb-0 px-4 pt-4">
                         <div class="row">
                             <div class="col">
-                                <h5 class="mb-1"><span class="text-success">Tickets:</span></h5>
+                                <h5 class="mb-1"><span class="text-success">My Tickets:</span></h5>
                                 <h1>
                                     <span class="text-success float-right">@Model.DevTickets.Count</span>
                                 </h1>
+                                <div class="chart-point float-right">
+                                    <div class="check-point-area">
+                                        <canvas id="ShareProfit2"></canvas>
+                                    </div>
+                                    <ul class="chart-point-list">
+                                        <li><i class="fa fa-circle text-primary mr-1"></i> 40% Tickets</li>
+                                        <li><i class="fa fa-circle text-success mr-1"></i> 35% Events</li>
+                                        <li><i class="fa fa-circle text-warning mr-1"></i> 25% Other</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
