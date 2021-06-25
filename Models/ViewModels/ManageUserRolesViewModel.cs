@@ -11,5 +11,6 @@ namespace BugTracker.Models.ViewModels
         public BTUser BTUser { get; set; } = new();
         public MultiSelectList Roles {get; set;}
         public List<string> SelectedRoles { get; set; }
+        public int companyId { get; set; }
     }
 }

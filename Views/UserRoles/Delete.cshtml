@@ -1,0 +1,36 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-5">
+            <div class="card mx-auto">
+                <div class="card-header">
+                    <div class="col">
+                        <h1><span class="text-success">Delete Ticket Type</span></h1><br />
+                        <h3><span class="text-success">Are you sure you want to delete this?</span></h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4>TicketType:</h4>
+                        </div>
+                        <div class="col">
+
+                           @*<h3>@Html.DisplayFor(model => model.Name)</h3>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+
+                    <form asp-action="Delete">
+                        @*<input type="hidden" asp-for="Id" />*@
+                        <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger" />
+                        <a asp-action="MyTickets">Back to List</a>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
