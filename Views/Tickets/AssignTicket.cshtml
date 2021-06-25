@@ -4,29 +4,37 @@
     ViewData["Title"] = "AssignTicket";
 }
 
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5">
+            <div class="card mx-auto">
+                <div class="card-header">
+                    <div class="col">
+                        <h1 style="text-decoration: underline;">Assign Ticket:</h1><br />
+                        <h4>@Model.Ticket.Title</h4>
+                    </div>
+                </div>
                 <form asp-action="AssignTicket" method="post">
-                    <div class="card">
-                        <div class="body">
-                            <input asp-for="@Model.Ticket.Id" hidden />
-                            <input asp-for="@Model.Ticket.ProjectId" hidden />
-                            <div class="row clearfix">
-                                <div class="col-md-6 col-sm-12">
-                                    <label>Select Developer </label>
-                                    <div class="form-group">
-                                        <select class="form-control" asp-for="DeveloperId" asp-items="Model.Developers" multiple="multiple">
-                                            <option>Select Developer</option>
-                                        </select>
-                                    </div>
-                                    <div class="mt-4 form-group">
-                                        <button type="submit" class="btn btn-outline-primary">Submit</button>
-                                        <button asp-action="Dashboard" asp-controller="Home" class="btn btn-outline-coderfoundry-secondary">Cancel</button>
-                                    </div>
+
+                    <div class="card-body">
+
+                        <input asp-for="@Model.Ticket.Id" hidden />
+                        <input asp-for="@Model.Ticket.ProjectId" hidden />
+                        <div class="row clearfix">
+                            <div class="col col-sm-12">
+                                <label>Select Developer for Ticket:  @Model.Ticket.Title</label>
+                                <div class="form-group">
+                                    <select class="form-control" asp-for="DeveloperId" asp-items="Model.Developers" multiple="multiple">
+                                        <option>Select Developer</option>
+                                    </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="mt-4 form-group">
+                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                            <button asp-action="Dashboard" asp-controller="Home" class="btn btn-outline-coderfoundry-secondary">Cancel</button>
                         </div>
                     </div>
                 </form>
