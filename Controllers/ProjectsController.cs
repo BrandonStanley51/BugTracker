@@ -23,13 +23,15 @@ namespace BugTracker.Controllers
         private readonly IBTProjectService _projectService;
         private readonly IBTCompanyInfoService _infoService;
         private readonly IBTCompanyInfoService _companyInfoService;
+        private readonly UserManager<BTUser> _userManager;
 
-        public ProjectsController(ApplicationDbContext context, IBTProjectService projectService, IBTCompanyInfoService infoService, IBTCompanyInfoService companyInfoService)
+        public ProjectsController(ApplicationDbContext context, IBTProjectService projectService, IBTCompanyInfoService infoService, IBTCompanyInfoService companyInfoService, UserManager<BTUser> userManager)
         {
             _context = context;
             _projectService = projectService;
             _infoService = infoService;
             _companyInfoService = companyInfoService;
+            _userManager = userManager;
         }
 
         // GET: Projects
@@ -84,6 +86,7 @@ namespace BugTracker.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
+            
             ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name");
             ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Name");
             return View();
@@ -95,15 +98,18 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,ImageFileName,ImageFileData,ImageContentType,Archived")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,StartDate,EndDate,ProjectPriorityId,Archived")] Project project)
         {
+            
             if (ModelState.IsValid)
             {
+                
+                project.CompanyId = User.Identity.GetCompanyId();
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(AllProjects));
             }
-            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", project.CompanyId);
+            //ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", project.CompanyId);
             ViewData["ProjectPriorityId"] = new SelectList(_context.Set<ProjectPriority>(), "Id", "Name", project.ProjectPriorityId);
             return View(project);
         }

@@ -1,5 +1,5 @@
 ﻿@model BugTracker.Models.Project
-
+@Html.HiddenFor(m => m.CompanyId)
 @{
     ViewData["Title"] = "Create";
 }
@@ -11,14 +11,14 @@
         <div class="col-5">
             <div class="card mx-auto">
                 <div class="card-header">
-                    <h1>Create Project</h1>                    
+                    <h1>Create Project</h1>
                 </div>
                 <div class="card-body">
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="CompanyId" class="control-label"></label>
-                            <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
+                            <input type="hidden" id="CompanyId" name="CompanyId" class="form-control" value="" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Name" class="control-label"></label>
@@ -66,14 +66,14 @@
                                     <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
                                 </label>
                             </div>*@
-                    <div class="card-footer">
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="card-footer">
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                            <div>
+                                <a asp-action="MyTickets">Back to List</a>
+                            </div>
                         </div>
-                        <div>
-                            <a asp-action="MyTickets">Back to List</a>
-                        </div>
-                    </div>
                     </form>
                 </div>
             </div>
