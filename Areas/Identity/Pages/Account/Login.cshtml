@@ -6,12 +6,12 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1><span class="text-success">@ViewData["Title"]</span></h1>
 <div class="row">
     <div class="col">
         <section>
-            <form id="account" method="post">
-                <h4>Use an account to log in.</h4>
+            <form class="text-success" id="account" method="post">
+                <h4><span class="text-success">Use an account to log in.</span></h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-outline-warning">Log in</button>
                 </div>
                 
 
@@ -47,7 +47,7 @@
                             <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                         </p>
 
-                        <p>Don't have an account? <a class="text-primary" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a></p>
+                        <p>Don't have an account? <a class="text-warning" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a></p>
 
                     </div>
                
@@ -61,16 +61,16 @@
 
     <div class="col">
         <section>
-            <h4>Use a Demo to log in.</h4>
+            <h4><span class="text-success">Use a Demo to log in.</span></h4>
             <hr />
             <form class="" id="account" method="post">
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary btn-block m-1" name="demoEmail" value="DemoAdminEmail">Demo Admin</button>
-                            <button type="submit" class="btn btn-primary btn-block m-1" name="demoEmail" value="DemoPMEmail">Demo PM</button>
-                            <button type="submit" class="btn btn-primary btn-block m-1" name="demoEmail" value="DemoDevEmail">Demo Developer</button>
-                            <button type="submit" class="btn btn-primary btn-block m-1" name="demoEmail" value="DemoSubEmail">Demo Submitter</button>
+                            <button type="submit" class="btn btn-outline-warning btn-block m-1" name="demoEmail" value="DemoAdminEmail">Demo Admin</button>
+                            <button type="submit" class="btn btn-outline-warning btn-block m-1" name="demoEmail" value="DemoPMEmail">Demo PM</button>
+                            <button type="submit" class="btn btn-outline-warning btn-block m-1" name="demoEmail" value="DemoDevEmail">Demo Developer</button>
+                            <button type="submit" class="btn btn-outline-warning btn-block m-1" name="demoEmail" value="DemoSubEmail">Demo Submitter</button>
                         </div>
                     </div>
                 </div>
