@@ -31,16 +31,16 @@
                             <input asp-for="Updated" class="form-control" />
                             <span asp-validation-for="Updated" class="text-danger"></span>
                         </div>
-                        <div class="form-group form-check">
+                        @*<div class="form-group form-check">
                             <label class="form-check-label text-success">
                                 <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
                             </label>
-                        </div>
-                        <div class="form-group">
+                        </div>*@
+                        @*<div class="form-group">
                             <label asp-for="ArchivedData" class="control-label text-success"></label>
                             <input asp-for="ArchivedData" class="form-control" />
                             <span asp-validation-for="ArchivedData" class="text-danger"></span>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label asp-for="ProjectId" class="control-label text-success"></label>
                             <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
