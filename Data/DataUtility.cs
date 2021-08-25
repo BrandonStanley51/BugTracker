@@ -760,24 +760,25 @@ namespace BugTracker.Data
 
         public static async Task SeedDefautTicketsAsync(ApplicationDbContext context)
         {
-            Get project Ids
+            //Get project Ids
             int portfolioId = context.Project.FirstOrDefault(p => p.Name == "Build a Personal Porfolio").Id;
             int blogId = context.Project.FirstOrDefault(p => p.Name == "Build a supplemental Blog Web Application").Id;
             int bugtrackerId = context.Project.FirstOrDefault(p => p.Name == "Build an Issue Tracking Web Application").Id;
 
-            Get ticket type Ids
+            //Get ticket type Ids
             int typeNewDev = context.TicketType.FirstOrDefault(p => p.Name == "New Development").Id;
             int typeRuntime = context.TicketType.FirstOrDefault(p => p.Name == "Runtime").Id;
             int typeUI = context.TicketType.FirstOrDefault(p => p.Name == "UI").Id;
             int typeMaintenance = context.TicketType.FirstOrDefault(p => p.Name == "Maintenance").Id;
+            
 
-            Get ticket priority Ids
+            //Get ticket priority Ids
             int priorityLow = context.TicketPriority.FirstOrDefault(p => p.Name == "Low").Id;
             int priorityMedium = context.TicketPriority.FirstOrDefault(p => p.Name == "Medium").Id;
             int priorityHigh = context.TicketPriority.FirstOrDefault(p => p.Name == "High").Id;
             int priorityUrgent = context.TicketPriority.FirstOrDefault(p => p.Name == "Urgent").Id;
 
-            Get ticket status Ids
+            //Get ticket status Ids
             int statusNew = context.TicketStatus.FirstOrDefault(p => p.Name == "New").Id;
             int statusUnassigned = context.TicketStatus.FirstOrDefault(p => p.Name == "Unassigned").Id;
             int statusDev = context.TicketStatus.FirstOrDefault(p => p.Name == "Development").Id;
@@ -787,7 +788,7 @@ namespace BugTracker.Data
             try
             {
                 IList<Ticket> tickets = new List<Ticket>() {
-                                PORTFOLIO
+                                //PORTFOLIO
                                 new Ticket() {Title = "Portfolio Ticket 1", Description = "Ticket details for portfolio ticket 1", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityLow, TicketStatusId = statusNew, TicketTypeId = typeNewDev},
                                 new Ticket() {Title = "Portfolio Ticket 2", Description = "Ticket details for portfolio ticket 2", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityMedium, TicketStatusId = statusUnassigned, TicketTypeId = typeMaintenance},
                                 new Ticket() {Title = "Portfolio Ticket 3", Description = "Ticket details for portfolio ticket 3", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityHigh, TicketStatusId = statusDev, TicketTypeId = typeUI},
@@ -796,7 +797,7 @@ namespace BugTracker.Data
                                 new Ticket() {Title = "Portfolio Ticket 6", Description = "Ticket details for portfolio ticket 6", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityMedium, TicketStatusId = statusUnassigned, TicketTypeId = typeMaintenance},
                                 new Ticket() {Title = "Portfolio Ticket 7", Description = "Ticket details for portfolio ticket 7", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityHigh, TicketStatusId = statusDev, TicketTypeId = typeUI},
                                 new Ticket() {Title = "Portfolio Ticket 8", Description = "Ticket details for portfolio ticket 8", Created = DateTimeOffset.Now, ProjectId = portfolioId, TicketPriorityId = priorityUrgent, TicketStatusId = statusTest, TicketTypeId = typeRuntime},
-                                BLOG
+                                //BLOG
                                 new Ticket() {Title = "Blog Ticket 1", Description = "Ticket details for blog ticket 1", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityLow, TicketStatusId = statusUnassigned, TicketTypeId = typeRuntime},
                                 new Ticket() {Title = "Blog Ticket 2", Description = "Ticket details for blog ticket 2", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityMedium, TicketStatusId = statusDev, TicketTypeId = typeUI},
                                 new Ticket() {Title = "Blog Ticket 3", Description = "Ticket details for blog ticket 3", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityHigh, TicketStatusId = statusNew, TicketTypeId = typeMaintenance},
@@ -814,7 +815,7 @@ namespace BugTracker.Data
                                 new Ticket() {Title = "Blog Ticket 15", Description = "Ticket details for blog ticket 15", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityHigh, TicketStatusId = statusNew,  TicketTypeId = typeMaintenance},
                                 new Ticket() {Title = "Blog Ticket 16", Description = "Ticket details for blog ticket 16", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityUrgent, TicketStatusId = statusUnassigned, TicketTypeId = typeNewDev},
                                 new Ticket() {Title = "Blog Ticket 17", Description = "Ticket details for blog ticket 17", Created = DateTimeOffset.Now, ProjectId = blogId, TicketPriorityId = priorityHigh, TicketStatusId = statusDev,  TicketTypeId = typeNewDev},
-                                BUGTRACKER
+                                //BUGTRACKER                                                                                                                         
                                 new Ticket() {Title = "Bug Tracker Ticket 1", Description = "Ticket details for blog ticket 1", Created = DateTimeOffset.Now, ProjectId = bugtrackerId, TicketPriorityId = priorityHigh, TicketStatusId = statusUnassigned, TicketTypeId = typeNewDev},
                                 new Ticket() {Title = "Bug Tracker Ticket 2", Description = "Ticket details for blog ticket 2", Created = DateTimeOffset.Now, ProjectId = bugtrackerId, TicketPriorityId = priorityHigh, TicketStatusId = statusUnassigned, TicketTypeId = typeNewDev},
                                 new Ticket() {Title = "Bug Tracker Ticket 3", Description = "Ticket details for blog ticket 3", Created = DateTimeOffset.Now, ProjectId = bugtrackerId, TicketPriorityId = priorityHigh, TicketStatusId = statusUnassigned, TicketTypeId = typeNewDev},
