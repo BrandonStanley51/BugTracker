@@ -21,7 +21,7 @@
                                     <th><span class="text-success">Description</span></th>
                                     <th><span class="text-success">Start Date</span></th>
                                     <th><span class="text-success">End Date</span></th>
-                                    <th><span class="text-success">Archived</span></th>
+                                    <th><span class="text-success">Members</span></th>
                                     <th><span class="text-success">Company</span></th>
                                     <th><span class="text-success">Project Priority</span></th>
                                     <th></th>
@@ -35,7 +35,7 @@
                                         <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                         <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
                                         <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Members.Count)</td>
                                         <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
                                         <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.ProjectPriority.Name)</span></td>
                                         <td>
