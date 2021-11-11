@@ -270,8 +270,8 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.DeveloperUserId);
-            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.OwnerUserId);
+            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "FullName", ticket.DeveloperUserId);
+            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "FullName", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Name", ticket.ProjectId);
             ViewData["TicketStatusId"] = new SelectList(_context.Set<TicketStatus>(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(_context.Set<TicketType>(), "Id", "Name", ticket.TicketTypeId);
@@ -304,6 +304,7 @@ namespace BugTracker.Controllers
                                                     .Include(t => t.TicketType)
                                                     .Include(t => t.Project)
                                                     .Include(t => t.DeveloperUser)
+                                                    //.Include(t => t.OwnerUser)
                                                     .AsNoTracking().FirstOrDefaultAsync(t => t.Id == ticket.Id);
 
                 try
@@ -369,8 +370,8 @@ namespace BugTracker.Controllers
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
                 return RedirectToAction(nameof(MyTickets));
             }
-            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
-            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
+            ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.DeveloperUserId);
+            ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Name", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Name", ticket.ProjectId);
             ViewData["TicketStatusId"] = new SelectList(_context.Set<TicketStatus>(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(_context.Set<TicketType>(), "Id", "Name", ticket.TicketTypeId);

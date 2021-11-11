@@ -11,18 +11,13 @@
                     <h3 class="panel-title"> @Model.Project.Name</h3>
                 </div>
             </div>
-            <p>
-                Name :
-                <span>@Model.Project.Name</span>
-            </p>
-
             <form asp-action="AssignPM" asp-controller="Projects" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="@Model.Project.Id">
                 <input type="hidden" asp-for="@Model.Project.Name">
                 <div class="col-12">
                     <div class="form-group">
-                        <label asp-for="@Model.Users" class="control-label">Assign team members for Project: @Model.Project.Name</label>
+                        <label asp-for="@Model.Users" class="control-label">Assign Project Manager: @Model.Project.Name</label>
                         <select asp-for="@Model.SelectedUser" class="form-control" asp-items="@Model.Users"></select>
                     </div>
                 </div>

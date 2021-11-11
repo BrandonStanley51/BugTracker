@@ -17,8 +17,8 @@
                         <table id="example4" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
-                                    <th><span class="text-success">Title</span></th>
                                     <th><span class="text-success">Project</span></th>
+                                    <th><span class="text-success">Ticket</span></th>
                                     <th><span class="text-success">Description</span></th>
                                     <th><span class="text-success">Ticket Priority</span></th>
                                     <th><span class="text-success">Ticket Type</span></th>
@@ -26,7 +26,7 @@
                                     <th><span class="text-success">Createad</span></th>
                                     <th><span class="text-success">Developer User</span></th>
                                     <th><span class="text-success">Owner User</span></th>
-                                    <th><span class="text-success">Archived</span></th>
+                                    @*<th><span class="text-success">Archived</span></th>*@
                                     <th></th>
                                 </tr>
                             </thead>
@@ -34,8 +34,8 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                         <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
                                         <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
@@ -43,7 +43,7 @@
                                         <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
                                         <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                        <td>@*@Html.DisplayFor(modelItem => item.Archived)*@</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">

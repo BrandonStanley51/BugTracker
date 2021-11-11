@@ -22,11 +22,13 @@
                         <input asp-for="@Model.Ticket.ProjectId" hidden />
                         <div class="row clearfix">
                             <div class="col col-sm-12">
-                                <label>Select Developer for Ticket:  @Model.Ticket.Title</label>
                                 <div class="form-group">
-                                    <select class="form-control" asp-for="DeveloperId" asp-items="ViewBag.DeveloperId" multiple="multiple">
-                                        <option>Select Developer</option>
-                                    </select>
+                                    <label>Select Developer for Ticket:  @Model.Ticket.Title</label>
+                                    <select class="form-control" asp-for="Ticket.DeveloperUserId" asp-items="ViewBag.DeveloperUserId" multiple="multiple"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Developers" class="control-label"></label>
+                                    <select asp-for="Developers" class="form-control" asp-items="ViewBag.Developers"></select>
                                 </div>
                             </div>
                         </div>

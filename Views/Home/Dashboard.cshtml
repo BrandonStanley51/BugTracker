@@ -24,16 +24,22 @@
 
 
                     </div>
+                    @if (User.IsInRole("Admin"))
+                    {
 
-                    <div class="card-footer">
-                        <a class="btn btn-outline-warning btn-sm align-text-bottom" asp-action="ManageUserRoles" asp-controller="UserRoles">
-                            Manage User Roles
-                        </a>
+                        <div class="card-footer">
+                            <a class="btn btn-outline-warning btn-sm align-text-bottom" asp-action="ManageUserRoles" asp-controller="UserRoles">
+                                Manage User Roles
+                            </a>
 
-                        <a class="btn btn-outline-warning align-text-bottom pull-right" asp-action="Create" asp-controller="Invites">
-                            Company Invites
-                        </a>
-                    </div>
+                            <a class="btn btn-outline-warning align-text-bottom pull-right" asp-action="Create" asp-controller="Invites">
+                                Company Invites
+                            </a>
+                        </div>
+                    }else if (User.IsInRole("ProjectManager"))
+                    {
+/////////////////////////////////////////////////////////////////////////////////////////////////
+                    }
                 </div>
             </div>
 
@@ -86,7 +92,7 @@
 
 
 
-            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+            @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
             {
                 <div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
                     <div class="card overflow-hidden mr-2">
@@ -157,10 +163,10 @@
                                     <div class="timeline-panel mr-1">
                                         <div class="media-body">
                                             <h4 class="mb-1"><span class="text-muted">@Html.DisplayFor(modelItem => item.Name)</span></h4>
-                                            <h5 class="d-block"><span class="text-primary">END DATE: @Html.DisplayFor(modelItem => item.EndDate)</span></h5>
+                                            <h5 class="d-block"><span class="text-success">END DATE: @Html.DisplayFor(modelItem => item.EndDate)</span></h5>
                                         </div>
                                         <div class="dropdown">
-                                            <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                            <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
                                                 <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                             </button>
                                             <div class="dropdown-menu mr-1">
@@ -215,7 +221,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
                                                 <td>
                                                     <div class="dropdown">
-                                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                                        <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
                                                             <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                                         </button>
                                                         <div class="dropdown-menu">
