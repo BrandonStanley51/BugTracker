@@ -33,7 +33,7 @@
                                     <th><span class="text-success">Createad</span></th>
                                     <th><span class="text-success">Developer User</span></th>
                                     <th><span class="text-success">Owner User</span></th>
-                                    <th><span class="text-success">Archived</span></th>
+                                    @*<th><span class="text-success">Archived</span></th>*@
                                     <th></th>
                                     
                                 </tr>
@@ -51,7 +51,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                     <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OwnerUser.FullName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Archived)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.Archived)</td>*@
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">

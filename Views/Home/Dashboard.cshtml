@@ -196,9 +196,9 @@
                                 <table id="example4" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th><span class="text-success">Title</span></th>
-                                            <th><span class="text-success">Createad</span></th>
                                             <th><span class="text-success">Project</span></th>
+                                            <th><span class="text-success">Ticket</span></th>
+                                            <th><span class="text-success">Created</span></th>
                                             <th><span class="text-success">Ticket Type</span></th>
                                             <th><span class="text-success">Ticket Priority</span></th>
                                             <th><span class="text-success">Ticket Status</span></th>
@@ -211,9 +211,9 @@
                                         @foreach (var item in Model.UnassignedTickets)
                                         {
                                             <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Created)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
                                                 <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
                                                 <td>@Html.DisplayFor(modelItem => item.TicketStatus.Name)</td>
@@ -252,9 +252,9 @@
                                 <table id="example4" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>Title</th>
                                             <th>Project</th>
-                                            <th>Createad</th>
+                                            <th>Ticket</th>
+                                            <th>Created</th>
                                             <th>Ticket Priority</th>
                                             <th>Ticket Type</th>
                                             <th>Ticket Status</th>
@@ -266,8 +266,8 @@
                                         @foreach (var item in Model.DevTickets)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                                 <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>
                                                 <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
@@ -275,7 +275,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)</td>
                                                 <td>
                                                     <div class="dropdown">
-                                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                                        <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
                                                             <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
                                                         </button>
                                                         <div class="dropdown-menu">

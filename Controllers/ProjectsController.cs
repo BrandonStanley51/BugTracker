@@ -38,12 +38,9 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> MyProjects()
         {
             int companyId = User.Identity.GetCompanyId().Value;
-            List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
+            List<Project> projects = await _projectService.ListUserProjectsAsync(_userManager.GetUserId(User));
             return View(projects);
 
-            //bool user = await _projectService.IsUserOnProject(userId, projectId);
-            //List<Project> projects = await _companyInfoService.GetAllProjectsAsync(companyId);
-            //return View(projects);
         }
 
         // GET: Projects/Details/5

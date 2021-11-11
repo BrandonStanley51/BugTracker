@@ -19,7 +19,7 @@
                         <input type="hidden" asp-for="@Model.Project.Name">
                         <div class="col-12">
                             <div class="form-group">
-                                <label asp-for="@Model.Users" class="control-label text-success">Assign team members for Project: @Model.Project.Name</label>
+                                <label asp-for="@Model.Users" class="control-label text-success">Assign team members</label>
                                 <select asp-for="@Model.SelectedUsers" class="form-control" asp-items="@Model.Users" multiple="multiple"></select>
                             </div>
                         </div>
