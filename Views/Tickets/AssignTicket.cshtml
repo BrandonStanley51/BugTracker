@@ -24,7 +24,7 @@
                             <div class="col col-sm-12">
                                 <label>Select Developer for Ticket:  @Model.Ticket.Title</label>
                                 <div class="form-group">
-                                    <select class="form-control" asp-for="DeveloperId" asp-items="Model.Developers" multiple="multiple">
+                                    <select class="form-control" asp-for="DeveloperId" asp-items="ViewBag.DeveloperId" multiple="multiple">
                                         <option>Select Developer</option>
                                     </select>
                                 </div>

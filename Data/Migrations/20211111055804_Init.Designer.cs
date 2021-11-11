@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BugTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210611175714_004")]
-    partial class _004
+    [Migration("20211111055804_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,11 +47,11 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("AvatarContentType")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("AvatarFileData")
-                        .HasColumnType("bytea");
-
                     b.Property<string>("AvatarFileName")
                         .HasColumnType("text");
+
+                    b.Property<byte[]>("AvatarImageData")
+                        .HasColumnType("bytea");
 
                     b.Property<int?>("CompanyId")
                         .HasColumnType("integer");
@@ -426,20 +426,28 @@ namespace BugTracker.Data.Migrations
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ModeratorId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("TicketId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ModeratorId");
+
                     b.HasIndex("TicketId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("TicketComment");
                 });
@@ -819,6 +827,10 @@ namespace BugTracker.Data.Migrations
 
             modelBuilder.Entity("BugTracker.Models.TicketComment", b =>
                 {
+                    b.HasOne("BugTracker.Models.BTUser", "Moderator")
+                        .WithMany()
+                        .HasForeignKey("ModeratorId");
+
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("Comments")
                         .HasForeignKey("TicketId")
@@ -827,7 +839,9 @@ namespace BugTracker.Data.Migrations
 
                     b.HasOne("BugTracker.Models.BTUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Moderator");
 
                     b.Navigation("Ticket");
 
