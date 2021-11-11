@@ -70,9 +70,23 @@ namespace BugTracker.Controllers
             var companyId = User.Identity.GetCompanyId().Value;
 
             var userId = _userManager.GetUserId(User);
+            //var ticketId = _projectService.
+
+
+
+            //List<Ticket> tickets = await _ticketService.GetMyTicketsAsync(userId);
+            ////////////////////
+            //int companyId = User.Identity.GetCompanyId().Value;
+            //List<Project> projects = await _projectService.ListUserProjectsAsync(_userManager.GetUserId(User));
+            ////////////////////
+
+
+
+
+
+
             var devTickets = await _ticketService.GetAllTicketsByRoleAsync("Developer", userId);
             var subTickets = await _ticketService.GetAllTicketsByRoleAsync("Submitter", userId);
-            
             var unassignedTickets = await _ticketService.GetAllTicketsByStatusAsync(companyId, "Unassigned");
 
             if (User.IsInRole("Developer"))
@@ -393,7 +407,7 @@ namespace BugTracker.Controllers
 
             model.Ticket = (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).FirstOrDefault(t => t.Id == Id);
             model.Developers = new SelectList(await _projectService.DevelopersOnProjectAsync(model.Ticket.ProjectId), "Id", "FullName");
-
+            ViewData["DeveloperId"] = model.Developers;
             return View(model);
         }
 

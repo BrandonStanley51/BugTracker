@@ -252,18 +252,9 @@ namespace BugTracker.Controllers
                 if (model.SelectedUser != null)
                 {
 
-                    List<string> memberIds = (await _projectService.GetMembersWithoutPMAsync(model.Project.Id))
-                                                                   .Select(m => m.Id).ToList();
+                    await _projectService.AddProjectManagerAsync(model.SelectedUser, model.Project.Id);
 
-                    foreach (string id in memberIds)
-                    {
-                        await _projectService.RemoveUserFromProjectAsync(id, model.Project.Id);
-                    }
-                    foreach (string id in memberIds)
-                    {
-                        await _projectService.AddUserToProjectAsync(id, model.Project.Id);
-                    }
-
+                
                     return RedirectToAction("Details", "Projects", new { model.Project.Id });
                 }
                 else

@@ -83,11 +83,11 @@
     <div class="col ml-2">
         <h3 class="text-center"><span class="text-success">ADD COMMENT</span></h3>
         <form asp-action="Create" asp-controller="TicketComments" method="post">
-            <input type="hidden" value="@Model.Id" name="TicketId" />
-            <input type="hidden" value="@Model.ProjectId" name="Ticket.ProjectId" />
-            <input type="hidden" value="@Model.DeveloperUserId" name="Ticket.DeveloperUserId" />
-            <textarea name="Comment" rows="10" class="form-control"></textarea>
-            <button class="btn btn-outline-warning btn-block btn-sm font-weight-bolder" type="submit"><strong style="font-size:20px;">Submit</strong></button>
+            <input type="hidden" name="TicketId" asp-for="Id" />
+            @*<input type="hidden" asp-for="ProjectId" name="ticketComment.Ticket.ProjectId" />
+            <input type="hidden" asp-for="DeveloperUserId" name="ticketComment.Ticket.DeveloperUserId" />*@
+            <textarea asp-for="@(new TicketComment().Comment)" rows="10" class="form-control"></textarea>
+            <input class="btn btn-outline-warning btn-block btn-sm font-weight-bolder" type="submit" value="Submit" style="font-size:20px;" />
         </form>
     </div>
 

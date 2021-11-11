@@ -21,14 +21,16 @@ namespace BugTracker.Controllers
         private readonly UserManager<BTUser> _userManager;
         private readonly IBTProjectService _projectService;
         private readonly IBTNotificationService _notificationService;
+        private readonly IBTTicketService _ticketService;
 
-        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService, UserManager<BTUser> userManager, IBTProjectService projectService, IBTNotificationService notificationService)
+        public TicketCommentsController(ApplicationDbContext context, IBasicImageService basicImageService, UserManager<BTUser> userManager, IBTProjectService projectService, IBTNotificationService notificationService, IBTTicketService ticketService)
         {
             _context = context;
             _basicImageService = basicImageService;
             _userManager = userManager;
             _projectService = projectService;
             _notificationService = notificationService;
+            _ticketService = ticketService;
         }
 
         // GET: TicketComments
@@ -69,14 +71,17 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Comment,TicketId")] TicketComment ticketComment)
+        public async Task<IActionResult> Create([Bind("Id, Comment, TicketId")] TicketComment ticketComment)
         {
             Notification notification;
 
             if (ModelState.IsValid)
             {
-                int companyId = User.Identity.GetCompanyId().Value;                
-                BTUser projectManager = await _projectService.GetProjectManagerAsync(ticketComment.Ticket.ProjectId);
+                int companyId = User.Identity.GetCompanyId().Value;
+                Ticket ticket = await _context.Ticket.FirstAsync(t => t.Id == ticketComment.TicketId);                
+                BTUser projectManager = await _projectService.GetProjectManagerAsync(ticket.ProjectId);
+
+
                 BTUser btUser = await _userManager.GetUserAsync(User);
                 ticketComment.UserId = btUser.Id;
                 ticketComment.Created = DateTimeOffset.Now;

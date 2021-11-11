@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Models.Enums;
 using BugTracker.Sevices.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,13 @@ namespace BugTracker.Sevices
     {
         private readonly ApplicationDbContext _context;
         private readonly IBTProjectService  _projectService;
+        private readonly UserManager<BTUser> _userManager;
 
-        public BTTicketService(ApplicationDbContext context, IBTProjectService projectService)
+        public BTTicketService(ApplicationDbContext context, IBTProjectService projectService, UserManager<BTUser> userManager)
         {
             _context = context;
             _projectService = projectService;
+            _userManager = userManager;
         }
 
         public async Task AssignTicketAsync(int ticketId, string userId)
@@ -218,7 +221,20 @@ namespace BugTracker.Sevices
                 developer = ticket.DeveloperUser;
             }
             return developer;
-        }
+        }        
+        //public async Task<BTUser> GetMyTicketsAsync(int userId)
+        //{
+        //    userId = await _userManager.GetUserId(User);
+
+        //    Ticket ticket = await _context.Ticket.Include(t => t.).FirstOrDefaultAsync(t=>t.Id == ticketId);
+        //    if (ticket?.DeveloperUserId != null)
+        //    {
+        //        developer = ticket.DeveloperUser;
+        //    }
+        //    return;
+        //}
+
+
 
         public async Task<int?> LookupTicketPriorityIdAsync(string priorityName)
         {
