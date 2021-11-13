@@ -11,14 +11,13 @@
 
 
                     <div class="row">
-
                         <div class="col text-center">
                             <h1 class="card-title" style="font-size: 30px;"><span class="text-success">@Model.Company.Name</span></h1>
 
                         </div>
 
 
-                        <div class="col text-center" style="font-size: 20px;">
+      !importantmportant                 <div class="col text-center" style="font-size: 20px;">
                             <span class="text-success">Welcome to the Dashboard!</span>
                         </div>
 
@@ -211,8 +210,8 @@
                                         @foreach (var item in Model.UnassignedTickets)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.Project.Name)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                                <td><a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Project.Id">@Html.DisplayFor(modelItem => item.Project.Name)</a></td>
+                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a></td>
                                                 <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.TicketType.Name)</td>
                                                 <td><span class="badge light badge-success">@Html.DisplayFor(modelItem => item.TicketPriority.Name)</span></td>

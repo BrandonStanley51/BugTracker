@@ -51,6 +51,7 @@ namespace BugTracker.Controllers
                 UnassignedTickets = await _ticketService.GetAllTicketsByStatusAsync(companyId, "Unassigned"),
                 DevTickets = await _ticketService.GetAllTicketsByRoleAsync("Developer", userId),
                 SubTickets = await _ticketService.GetAllTicketsByRoleAsync("Submitter", userId),
+                 
         };
             return View(model);
         }        
