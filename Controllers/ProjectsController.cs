@@ -259,7 +259,7 @@ namespace BugTracker.Controllers
                 }
                 else
                 {
-                    //error message
+                    
                 }
             }
             return View(model);
