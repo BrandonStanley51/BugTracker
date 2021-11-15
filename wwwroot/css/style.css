@@ -30632,6 +30632,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         }
 
             [data-theme-version="transparent"] .deznav .metismenu ul a:hover, [data-theme-version="transparent"] .deznav .metismenu ul a:focus, [data-theme-version="transparent"] .deznav .metismenu ul a.mm-active {
+                
                 color: #fff;
             }
 
