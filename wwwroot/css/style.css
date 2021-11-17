@@ -79,7 +79,9 @@
 
 
 
-
+.sideBarLinks {
+    color: aqua;
+}
 
 
 
@@ -15871,7 +15873,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     transition: all .2s ease;
     box-shadow: 0px 40px 40px 0px rgba(82, 63, 105, 0.1);
 }
-
+.sideBarTitles {
+    font-size: 25px;    
+}
 @media only screen and (max-width: 767px) {
     .deznav {
         background-color: #fff;
@@ -17183,6 +17187,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
         [data-sidebar-style="mini"][data-layout="horizontal"] .metismenu > li:hover a .nav-text {
             display: none;
+
         }
 
     [data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"][data-sidebar-style="compact"] .content-body {
@@ -17628,6 +17633,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     }
 
     [data-sidebar-style="modern"][data-layout="vertical"] .deznav .nav-text {
+        
         display: block;
         margin-top: 0;
     }
@@ -43707,16 +43713,23 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     }
 
     [data-theme-version="dark"] a.link {
-        color: #ddd;
+        color: #EB721C;
     }
 
         [data-theme-version="dark"] a.link:focus,
         [data-theme-version="dark"] a.link:hover {
             color: #00afef;
         }
-
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+        /*00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
     [data-theme-version="dark"] a:hover {
-        color: #c62828;
+        color: #EB721C;
     }
 
     [data-theme-version="dark"] .border-right {
@@ -43754,6 +43767,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
         border-color: #333a54;
         color: #fff;
     }
+.tableLinks {
+    color: #019EFE;
+}
 
     [data-theme-version="dark"] .card {
         background-color: #1e2746;
