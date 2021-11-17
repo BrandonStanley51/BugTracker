@@ -102,11 +102,6 @@ namespace BugTracker.Data
                 IList<Company> defaultcompanies = new List<Company>() {
                     new Company() { Name = "DemoCompany", Description="This is default Company 1" }
                     //new Company() { Name = "Company2", Description="This is default Company 2" },
-                    //new Company() { Name = "Company3", Description="This is default Company 3" },
-                    //new Company() { Name = "Company4", Description="This is default Company 4" },
-                    //new Company() { Name = "Company5", Description="This is default Company 5" },
-                    //new Company() { Name = "Company6", Description="This is default Company 6" },
-                    //new Company() { Name = "Company7", Description="This is default Company 7" }
                 };
 
                 var dbCompanies = context.Company.Select(c => c.Name).ToList();
