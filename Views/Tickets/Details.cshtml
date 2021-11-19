@@ -59,7 +59,7 @@
         <div class="card overflow-hidden mr-2">
             <div class="card-body pb-0 px-4 pt-4">
 
-                <h5 class="mb-1"><span class="text-success">Assigned To:</span></h5>
+                <h5 class="mb-1"><span class="text-success">Assigned To: </span></h5>
                 <h1>
                     <span class="text-warning float-right">@Html.DisplayFor(model => model.DeveloperUser.FullName)</span>
 
@@ -70,22 +70,14 @@
 </div>
 <!-- row -->
 <div class="row">
-    @*<div class="col-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Add Comment Someday :D</h4>
-                </div>
-                <div class="card-body">
-                    <div class="summernote"></div>
-                </div>
-            </div>
-        </div>*@
+
     <div class="col ml-2">
         <h3 class="text-center"><span class="text-success">ADD COMMENT</span></h3>
         <form asp-action="Create" asp-controller="TicketComments" method="post">
             <input type="hidden" name="TicketId" asp-for="Id" />
             @*<input type="hidden" asp-for="ProjectId" name="ticketComment.Ticket.ProjectId" />
             <input type="hidden" asp-for="DeveloperUserId" name="ticketComment.Ticket.DeveloperUserId" />*@
+                    @*<div class="summernote"></div>*@
             <textarea asp-for="@(new TicketComment().Comment)" rows="10" class="form-control"></textarea>
             <input class="btn btn-outline-warning btn-block btn-sm font-weight-bolder" type="submit" value="Submit" style="font-size:20px;" />
         </form>
@@ -94,8 +86,7 @@
     <div class="col-6">
         <div class="card overflow-hidden mr-2">
             <div class="card-header">
-                <h1><span class="text-success">Ticket:  </span><span class="text-success" style="font-size:22px;">@Html.DisplayFor(model => model.Title)</span></h1>
-
+                <h3><span class="text-success">Ticket:  </span><span class="text-success" style="font-size:28px;">@Html.DisplayFor(model => model.Title)</span></h3>
 
             </div>
             <div class="card-body pb-0 px-4 pt-4">
@@ -208,7 +199,7 @@
 
 <div class="col-sm-5 col-md-6 col-12 pb-4">
     <h1><span class="text-success">Comments</span></h1>
-    <div class="comment mt-4 text-justify float-left">
+    <div class="mt-4 text-justify float-left">
         @foreach (TicketComment comment in Model.Comments.OrderByDescending(c => c.Created))
         {
 
